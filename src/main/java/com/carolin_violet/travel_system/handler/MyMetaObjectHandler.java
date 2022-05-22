@@ -16,12 +16,16 @@ import java.util.Date;
 
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
+
+    // 添加记录时自动填充的字段
     @Override
     public void insertFill(MetaObject metaObject) {
         this.setFieldValByName("createTime", new Date(), metaObject);
         this.setFieldValByName("modifyTime", new Date(), metaObject);
+        this.setFieldValByName("isDeleted", 0, metaObject);
     }
 
+    // 修改记录时自动填充的字段
     @Override
     public void updateFill(MetaObject metaObject) {
         this.setFieldValByName("modifyTime", new Date(), metaObject);

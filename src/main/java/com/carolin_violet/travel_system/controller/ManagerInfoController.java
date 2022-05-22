@@ -1,13 +1,10 @@
 package com.carolin_violet.travel_system.controller;
 
-import com.carolin_violet.travel_system.bean.ManagerInfo;
-import com.carolin_violet.travel_system.service.ManagerInfoService;
+import com.carolin_violet.travel_system.bean.Manager;
+import com.carolin_violet.travel_system.service.ManagerService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,12 +20,47 @@ import java.util.List;
 @CrossOrigin
 public class ManagerInfoController {
     @Autowired
-    private ManagerInfoService managerInfoService;
+    private ManagerService managerService;
 
+    // 查询所有管理员信息
     @GetMapping("findAll")
     public R findAllManager() {
-        List<ManagerInfo> list = managerInfoService.list(null);
+        List<Manager> list = managerService.list(null);
         return R.ok().data("items", list);
+    }
+
+    // 添加管理员信息
+    @PostMapping("addManager")
+    public R addManager(@RequestBody Manager manager) {
+        boolean save = managerService.save(manager);
+        if (save) {
+            return R.ok();
+        } else {
+            return R.error();
+        }
+    }
+
+    // 修改管理员信息
+    @PutMapping("{id}")
+    public R updateManager(@PathVariable String id, @RequestBody Manager manager) {
+        manager.setId(id);
+        boolean flag = managerService.updateById(manager);
+        if (flag) {
+            return R.ok();
+        } else {
+            return R.error();
+        }
+    }
+
+    // 逻辑删除管理员
+    @DeleteMapping("{id}")
+    public R removeManger(@PathVariable String id) {
+        boolean flag = managerService.removeById(id);
+        if (flag) {
+            return R.ok();
+        } else {
+            return R.error();
+        }
     }
 
 }

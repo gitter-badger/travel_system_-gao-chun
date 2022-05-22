@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ManagerInfo {
+public class Manager {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.ID_WORKER_STR)
@@ -36,6 +36,7 @@ public class ManagerInfo {
     private String password;
 
     @TableLogic
+    @TableField(fill = FieldFill.INSERT)
     private Integer isDeleted;
 
     @TableField(fill = FieldFill.INSERT)

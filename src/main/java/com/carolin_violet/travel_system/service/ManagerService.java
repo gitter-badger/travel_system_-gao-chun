@@ -1,7 +1,7 @@
 package com.carolin_violet.travel_system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.carolin_violet.travel_system.bean.ManagerInfo;
+import com.carolin_violet.travel_system.bean.Manager;
 
 /**
  * @ClassName ManagerInfoService
@@ -10,5 +10,5 @@ import com.carolin_violet.travel_system.bean.ManagerInfo;
  * @Date 2022/5/22 8:59
  * @Version 1.0
  */
-public interface ManagerInfoService extends IService<ManagerInfo> {
+public interface ManagerService extends IService<Manager> {
 }
