@@ -54,9 +54,9 @@ public class CodeGenerator {
         // 4、包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent("com.carolin_violet");
-        pc.setModuleName("travel_system"); //模块名 com.atguigu.eduservice
+        pc.setModuleName("travel_system"); //模块名 com.carolin_violet.travel_system
 
-        pc.setController("controller");  //包 com.atguigu.eduservice.controller
+        pc.setController("controller");  //包 com.carolin_violet.travel_system.controller
         pc.setEntity("bean");
         pc.setService("service");
         pc.setMapper("mapper");
@@ -64,7 +64,7 @@ public class CodeGenerator {
 
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("manager_info");  // 数据库表名
+        strategy.setInclude("travel_note", "photos", "feedback");  // 数据库表名
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
         strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
 

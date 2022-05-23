@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/manager")
 @CrossOrigin
-public class ManagerInfoController {
+public class ManagerController {
     @Autowired
     private ManagerService managerService;
 
@@ -41,9 +41,8 @@ public class ManagerInfoController {
     }
 
     // 修改管理员信息
-    @PutMapping("{id}")
-    public R updateManager(@PathVariable String id, @RequestBody Manager manager) {
-        manager.setId(id);
+    @PutMapping("updateManager")
+    public R updateManager(@RequestBody Manager manager) {
         boolean flag = managerService.updateById(manager);
         if (flag) {
             return R.ok();

@@ -1,51 +1,54 @@
 package com.carolin_violet.travel_system.bean;
 
-
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
-
 import java.io.Serializable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-
 /**
- * @ClassName ManagerInfo
- * @Description TODO
- * @Author zj
- * @Date 2022/5/22 8:50
- * @Version 1.0
+ * <p>
+ * 
+ * </p>
+ *
+ * @author carolin-violet
+ * @since 2022-05-22
  */
-
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Manager {
+public class TouristRoute implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /**
-     * 管理员id
+     * 线路id
      */
     @TableId(value = "id", type = IdType.ID_WORKER_STR)
     private String id;
 
     /**
-     * 管理员姓名
+     * 线路类型(比如一日游，两日游)
      */
-    private String name;
+    private String type;
 
     /**
-     * 管理员手机号
+     * 线路标题
      */
-    private String telephone;
+    private String title;
 
     /**
-     * 管理员密码
+     * 线路描述
      */
-    private String password;
+    private String description;
+
+    /**
+     * 推荐原因
+     */
+    private String reason;
 
     /**
      * 逻辑删除
@@ -65,4 +68,5 @@ public class Manager {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date modifyTime;
+
 }
