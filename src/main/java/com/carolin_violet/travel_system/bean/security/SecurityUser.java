@@ -26,13 +26,13 @@ public class SecurityUser implements UserDetails {
     private String password;
     private Integer status = 1;
 
-    private List<String> permissionList = new ArrayList<>();
+    private List<String> permissionValueList = new ArrayList<>();
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        for(String permissionValue : permissionList) {
+        for(String permissionValue : permissionValueList) {
             if(StringUtils.isEmpty(permissionValue)) continue;
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(permissionValue);
             authorities.add(authority);

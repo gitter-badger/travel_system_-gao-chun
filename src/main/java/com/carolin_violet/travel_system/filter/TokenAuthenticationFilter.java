@@ -39,43 +39,28 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
-            throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        UsernamePasswordAuthenticationToken authentication = null;
-        try {
-            authentication = getAuthentication(req);
-        } catch (Exception e) {
-            ResponseUtil.out(res, R.error());
-        }
-
-        if (authentication != null) {
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } else {
-            ResponseUtil.out(res, R.error());
-        }
-        chain.doFilter(req, res);
-    }
-
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         // token置于header里
         String token = request.getHeader("token");
-        if (token != null && !"".equals(token.trim())) {
-            String userName = tokenManager.getUserFromToken(token);
+        String userName = tokenManager.getUserFromToken(token);
+        List<String> permissionValueList = (List<String>) redisTemplate.opsForValue().get(userName);
+        System.out.println("77777777777777777777777777777777777777777777");
+        System.out.println(permissionValueList.toString());
 
-            List<String> permissionValueList = (List<String>) redisTemplate.opsForValue().get(userName);
-            Collection<GrantedAuthority> authorities = new ArrayList<>();
-            for(String permissionValue : permissionValueList) {
-                if(StringUtils.isEmpty(permissionValue)) continue;
-                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(permissionValue);
-                authorities.add(authority);
-            }
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-            if (!StringUtils.isEmpty(userName)) {
-                return new UsernamePasswordAuthenticationToken(userName, token, authorities);
-            }
-            return null;
+        for(String permissionValue : permissionValueList) {
+            if(StringUtils.isEmpty(permissionValue)) continue;
+            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(permissionValue);
+            authorities.add(authority);
         }
-        return null;
+        System.out.println("88888888888888888888888888888888888888888888");
+        System.out.println(authorities.toString());
+        UsernamePasswordAuthenticationToken authResult = new UsernamePasswordAuthenticationToken(userName, token, authorities);
+        SecurityContextHolder.getContext().setAuthentication(authResult);
+
+        chain.doFilter(request, response);
     }
+
 }

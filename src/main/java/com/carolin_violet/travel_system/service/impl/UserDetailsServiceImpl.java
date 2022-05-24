@@ -49,7 +49,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         SecurityUser securityUser = new SecurityUser();
         securityUser.setUsername(user.getTelephone());
         securityUser.setPassword(user.getPassword());
-        System.out.println(securityUser.toString());
+        List<String> permissionListById = permissionService.getPermissionListById(user.getId());
+        securityUser.setPermissionValueList(permissionListById);  // 根据用户id获取权限列表
         return securityUser;
     }
 
