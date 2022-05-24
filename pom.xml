@@ -100,12 +100,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <!--spring2.X集成redis所需common-pool2-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.commons</groupId>-->
-<!--            <artifactId>commons-pool2</artifactId>-->
-<!--            <version>2.6.0</version>-->
-<!--        </dependency>-->
 
 
         <!--日期时间工具-->
@@ -150,8 +144,6 @@
             <version>${jwt.version}</version>
         </dependency>
 
-
-
         <!--aliyun-->
         <dependency>
             <groupId>com.aliyun</groupId>
@@ -179,6 +171,13 @@
             <version>${commons-dbutils.version}</version>
         </dependency>
 
+
+        <!--腾讯云短信服务依赖-->
+        <dependency>
+            <groupId>com.tencentcloudapi</groupId>
+            <artifactId>tencentcloud-sdk-java</artifactId>
+            <version>3.1.270</version><!-- 注：这里只是示例版本号（可直接使用），可获取并替换为 最新的版本号，注意不要使用4.0.x版本（非最新版本） -->
+        </dependency>
 
         <dependency>
             <groupId>org.testng</groupId>
