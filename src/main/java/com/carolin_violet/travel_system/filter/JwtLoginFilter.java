@@ -1,7 +1,5 @@
 package com.carolin_violet.travel_system.filter;
 
-import com.carolin_violet.travel_system.bean.Role;
-import com.carolin_violet.travel_system.bean.security.InputUserCache;
 import com.carolin_violet.travel_system.bean.security.LoginUser;
 import com.carolin_violet.travel_system.bean.security.SecurityUser;
 import com.carolin_violet.travel_system.security.TokenManager;
@@ -22,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @ClassName JwtLoginFilter
@@ -50,9 +47,9 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-//            LoginUser loginUser = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
-//            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword(), new ArrayList<>()));
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(InputUserCache.username, InputUserCache.password, new ArrayList<>()));
+            LoginUser loginUser = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword(), new ArrayList<>()));
+//            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(InputUserCache.username, InputUserCache.password, new ArrayList<>()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -74,7 +71,9 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         SecurityUser securityUser = (SecurityUser) auth.getPrincipal();
         // 根据用户名生产token
         String token = tokenManager.createToken(securityUser.getUsername());
-        redisTemplate.opsForValue().set(securityUser.getUsername(), securityUser.getPermissionValueList());
+        // 将权限存入redis缓存
+        redisTemplate.opsForValue().set(securityUser.getUsername() + "permission", securityUser.getPermissionValueList());
+
         ResponseUtil.out(res, R.ok().data("token", token));
     }
 

@@ -41,7 +41,7 @@ public class MyLogoutHandler implements LogoutHandler {
         String userName = tokenJwtManager.getUserFromToken(token);
 
         // 从redis删除权限列表缓存
-        redisTemplate.delete(userName);
+        redisTemplate.delete(userName + "permission");
         ResponseUtil.out(httpServletResponse, R.ok().data("msg", "退出成功"));
 
     }

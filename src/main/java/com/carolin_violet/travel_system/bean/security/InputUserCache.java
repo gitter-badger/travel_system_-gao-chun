@@ -1,5 +1,7 @@
 package com.carolin_violet.travel_system.bean.security;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @ClassName InputUserCache
  * @Description TODO
@@ -11,4 +13,5 @@ public class InputUserCache {
     public static String username;
     public static String password;
     public static String code;
+
 }

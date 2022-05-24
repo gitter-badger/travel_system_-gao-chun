@@ -47,7 +47,6 @@ public class FeedbackController {
     }
 
     // 上传反馈
-    @PreAuthorize("hasAnyAuthority('ROLE_FEEDBACK')")
     @PostMapping("addFeedback")
     public R addFeedback(@RequestBody FeedbackVo feedbackVo) {
         feedbackService.addFeedback(feedbackVo);

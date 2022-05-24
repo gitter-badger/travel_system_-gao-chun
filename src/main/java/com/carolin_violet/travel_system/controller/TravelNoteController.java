@@ -50,7 +50,6 @@ public class TravelNoteController {
 
 
     // 添加游记
-    @PreAuthorize("hasAnyAuthority('ROLE_NOTE')")
     @PostMapping("addNote")
     public R addNote(@RequestBody TravelNoteVo travelNoteVo) {
         travelNoteService.addNote(travelNoteVo);

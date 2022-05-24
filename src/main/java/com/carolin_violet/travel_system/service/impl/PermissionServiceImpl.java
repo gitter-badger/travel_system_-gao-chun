@@ -30,7 +30,6 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     // 根据用户id获取相关权限的名称列表
     @Override
     public List<String> getPermissionListById(String id) {
-        System.out.println(id);
         QueryWrapper<Permission> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", id);
         List<Permission> permissions = baseMapper.selectList(wrapper);

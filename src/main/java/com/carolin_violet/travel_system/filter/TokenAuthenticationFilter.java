@@ -41,7 +41,7 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         //获取当前认证成功用户权限信息
-        UsernamePasswordAuthenticationToken authRequest = getAuthentication(request);
+        UsernamePasswordAuthenticationToken authRequest = getAuthentication(request, response);
         if(authRequest != null){
             // 有权限，则放入权限上下文中
             SecurityContextHolder.getContext().setAuthentication(authRequest);
@@ -51,18 +51,15 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
 
     }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request, HttpServletResponse response) {
+
         //从header获取token
         String token = request.getHeader("token");
         if(token != null) {
-            //从token获取用户名
+            //从token获取手机号
             String username = tokenManager.getUserFromToken(token);
-//             登录成功时，会将权限数据存入redis
-//             这里是验证获取权限信息
-//             1、从redis中获取对应该用户的权限信息
-//             2、或从数据库中再次查询
-            System.out.println(redisTemplate.opsForValue().get(username));
-            List<String> permissionValueList = (List<String>) redisTemplate.opsForValue().get(username);
+
+            List<String> permissionValueList = (List<String>) redisTemplate.opsForValue().get(username + "permission");
             Collection<GrantedAuthority> authority = new ArrayList<>();
             for(String permissionValue : permissionValueList) {
                 SimpleGrantedAuthority auth = new SimpleGrantedAuthority(permissionValue);

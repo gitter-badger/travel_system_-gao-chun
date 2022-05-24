@@ -90,7 +90,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // 前后代码略
                 // 添加短信验证码过滤器链
-                .addFilterBefore(new CodeValidateFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(new CodeValidateFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new JwtLoginFilter(authenticationManager(), tokenManager, redisTemplate)) // 认证交给 自定义 TokenLoginFilter 实现
                 .addFilter(new TokenAuthenticationFilter(authenticationManager(),tokenManager, redisTemplate))
                 // basic 方式
@@ -115,7 +115,9 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
-                "/msm/send/**",
+                "/msm/send/**",   // 忽略短信上传接口
+                "/api/feedback/addFeedback",   // 忽略反馈上传接口
+                "/api/travel-note/addNote",    // 忽略游记上传接口
                 "/swagger-resources/**",
                 "/webjars/**", "/v2/**", "/swagger-ui.html/**"
         );
