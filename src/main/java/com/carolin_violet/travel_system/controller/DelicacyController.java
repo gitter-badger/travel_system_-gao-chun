@@ -40,6 +40,8 @@ public class DelicacyController {
     @PreAuthorize("hasAnyAuthority('ROLE_DELICACY')")
     @PostMapping("addDelicacy")
     public R addDelicacy(@RequestBody Delicacy delicacy) {
+        System.out.println("-------------------------------");
+        System.out.println(delicacy.getDescription());
         boolean save = delicacyService.save(delicacy);
         if (save) {
             return R.ok();

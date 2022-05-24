@@ -1,8 +1,6 @@
 package com.carolin_violet.travel_system.filter;
 
-import com.carolin_violet.travel_system.bean.Manager;
 import com.carolin_violet.travel_system.security.TokenManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -59,9 +57,6 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
         if(token != null) {
             //从token获取用户名
             String username = tokenManager.getUserFromToken(token);
-            System.out.println("99999999999999999999999999999999999");
-            System.out.println(username);
-
 //             登录成功时，会将权限数据存入redis
 //             这里是验证获取权限信息
 //             1、从redis中获取对应该用户的权限信息

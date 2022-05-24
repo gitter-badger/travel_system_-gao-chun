@@ -70,8 +70,6 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             Authentication auth) throws IOException, ServletException {
 
         SecurityUser securityUser = (SecurityUser) auth.getPrincipal();
-        System.out.println("9999999999999999999999999999999999999999999");
-        System.out.println(securityUser.getPermissionValueList().toString());
         // 根据用户名生产token
         String token = tokenManager.createToken(securityUser.getUsername());
         redisTemplate.opsForValue().set(securityUser.getUsername(), securityUser.getPermissionValueList());

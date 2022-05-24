@@ -81,7 +81,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .logout() // logout设定
-                .logoutUrl("/logouts")  //退出请求  /logouts 未定义，交给自定义handler实现功能
+                .logoutUrl("/admin/logout")  //退出请求  /logouts 未定义，交给自定义handler实现功能
                 .addLogoutHandler(myLogoutHandler) // 登出 myLogoutHandler 处理
 
                 .and()

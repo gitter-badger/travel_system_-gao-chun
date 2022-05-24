@@ -4,8 +4,8 @@ import com.carolin_violet.travel_system.bean.Manager;
 import com.carolin_violet.travel_system.service.ManagerService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +36,8 @@ public class ManagerController {
     @PreAuthorize("hasAnyAuthority('ROLE_MANAGER')")
     @PostMapping("addManager")
     public R addManager(@RequestBody Manager manager) {
+        // 用Bcrypt对密码加密
+        manager.setPassword(new BCryptPasswordEncoder().encode(manager.getPassword()));
         boolean save = managerService.save(manager);
         if (save) {
             return R.ok();
@@ -48,6 +50,8 @@ public class ManagerController {
     @PreAuthorize("hasAnyAuthority('ROLE_MANAGER')")
     @PutMapping("updateManager")
     public R updateManager(@RequestBody Manager manager) {
+        // 用Bcrypt对密码加密
+        manager.setPassword(new BCryptPasswordEncoder().encode(manager.getPassword()));
         boolean flag = managerService.updateById(manager);
         if (flag) {
             return R.ok();

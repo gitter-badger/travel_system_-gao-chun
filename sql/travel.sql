@@ -11,7 +11,7 @@
  Target Server Version : 80025
  File Encoding         : 65001
 
- Date: 22/05/2022 21:09:13
+ Date: 24/05/2022 21:29:37
 */
 
 SET NAMES utf8mb4;
@@ -37,6 +37,7 @@ CREATE TABLE `delicacy`  (
 -- Records of delicacy
 -- ----------------------------
 INSERT INTO `delicacy` VALUES ('1528260176480604161', '蟹黄包', '很好吃', 'qaqwwa', 1, 0, '2022-05-22 14:23:14', '2022-05-22 15:04:23');
+INSERT INTO `delicacy` VALUES ('1529088864428240897', '米糕', '很好吃', 'qqqqq', 0, 0, '2022-05-24 21:16:09', '2022-05-24 21:16:09');
 
 -- ----------------------------
 -- Table structure for feedback
@@ -56,6 +57,7 @@ CREATE TABLE `feedback`  (
 -- Records of feedback
 -- ----------------------------
 INSERT INTO `feedback` VALUES ('1528361382464978945', 'wq@163.com', '卧槽', 0, '2022-05-22 21:05:24', '2022-05-22 21:05:24');
+INSERT INTO `feedback` VALUES ('1528617766280605698', 'wq@163.com', '卧槽', 0, '2022-05-23 14:04:10', '2022-05-23 14:04:10');
 
 -- ----------------------------
 -- Table structure for hotel
@@ -86,7 +88,7 @@ CREATE TABLE `manager`  (
   `id` char(19) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员id',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员姓名',
   `telephone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员手机号',
-  `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员密码',
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员密码',
   `is_deleted` tinyint(0) NOT NULL COMMENT '逻辑删除(1为删除，0为没删除)',
   `create_time` datetime(0) NOT NULL COMMENT '记录添加时间',
   `modify_time` datetime(0) NOT NULL COMMENT '记录修改时间',
@@ -96,8 +98,9 @@ CREATE TABLE `manager`  (
 -- ----------------------------
 -- Records of manager
 -- ----------------------------
-INSERT INTO `manager` VALUES ('1528213171205128194', 'admin', '12345678910', '123456', 0, '2022-05-22 11:16:28', '2022-05-22 14:52:32');
-INSERT INTO `manager` VALUES ('1528358307016765442', 'admin1', '12345678911', '123456', 0, '2022-05-22 20:53:11', '2022-05-22 20:53:11');
+INSERT INTO `manager` VALUES ('0', 'admin', '17075256495', '$2a$10$bzlXeNhRppIN5eS1eEbdge..MV5No00W/5N8jXwv66NE2Bm6qStGu', 0, '2022-05-24 09:07:27', '2022-05-24 09:07:32');
+INSERT INTO `manager` VALUES ('1528213171205128194', 'admin2', '12345678910', '$2a$10$CYX9OMv0yO8wR8rE19N2fOaXDJondci5uR68k2eQJm50q8ESsDMlC', 0, '2022-05-22 11:16:28', '2022-05-22 14:52:32');
+INSERT INTO `manager` VALUES ('1528358307016765442', 'admin1', '12345678911', '$2a$10$CYX9OMv0yO8wR8rE19N2fOaXDJondci5uR68k2eQJm50q8ESsDMlC', 0, '2022-05-22 20:53:11', '2022-05-22 20:53:11');
 
 -- ----------------------------
 -- Table structure for notice
@@ -120,6 +123,31 @@ CREATE TABLE `notice`  (
 INSERT INTO `notice` VALUES ('1528276227691917314', '公告AA', '今天下雨a', 'qaq', 0, '2022-05-22 15:27:01', '2022-05-22 15:29:17');
 
 -- ----------------------------
+-- Table structure for permission
+-- ----------------------------
+DROP TABLE IF EXISTS `permission`;
+CREATE TABLE `permission`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `user_id` char(19) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `role_id` int(0) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of permission
+-- ----------------------------
+INSERT INTO `permission` VALUES (1, '0', 1);
+INSERT INTO `permission` VALUES (2, '1528358307016765442', 2);
+INSERT INTO `permission` VALUES (4, '0', 2);
+INSERT INTO `permission` VALUES (5, '0', 3);
+INSERT INTO `permission` VALUES (6, '0', 4);
+INSERT INTO `permission` VALUES (7, '0', 8);
+INSERT INTO `permission` VALUES (8, '0', 6);
+INSERT INTO `permission` VALUES (9, '0', 7);
+INSERT INTO `permission` VALUES (10, '0', 8);
+INSERT INTO `permission` VALUES (11, '1528213171205128194', 4);
+
+-- ----------------------------
 -- Table structure for photos
 -- ----------------------------
 DROP TABLE IF EXISTS `photos`;
@@ -136,11 +164,32 @@ CREATE TABLE `photos`  (
 -- ----------------------------
 -- Records of photos
 -- ----------------------------
-INSERT INTO `photos` VALUES ('1528359302010617857', '1528359301754765313', 'ssa', 0, '2022-05-22 20:57:08', '2022-05-22 20:57:08');
-INSERT INTO `photos` VALUES ('1528359302073532418', '1528359301754765313', 'ewef', 0, '2022-05-22 20:57:08', '2022-05-22 20:57:08');
-INSERT INTO `photos` VALUES ('1528361382599196673', '1528361382464978945', 'ewt', 0, '2022-05-22 21:05:24', '2022-05-22 21:05:24');
-INSERT INTO `photos` VALUES ('1528361382662111234', '1528361382464978945', 'dsg', 0, '2022-05-22 21:05:24', '2022-05-22 21:05:24');
-INSERT INTO `photos` VALUES ('1528361382662111235', '1528361382464978945', 'dsgdf', 0, '2022-05-22 21:05:24', '2022-05-22 21:05:24');
+INSERT INTO `photos` VALUES ('1528602196071964674', '1528602195874832386', 'https://edu-19527.oss-cn-nanjing.aliyuncs.com/travel_GaoChun/d48d95a4a352415d9b9240f3fed25a6c9866091_carolin-zhou_1641393112.png', 1, '2022-05-23 13:02:18', '2022-05-23 13:02:18');
+INSERT INTO `photos` VALUES ('1528617602232987649', '1528617602061021186', 'https://edu-19527.oss-cn-nanjing.aliyuncs.com/travel_GaoChun/aed4f410e81d4a018e3c995f1888b4589866091_carolin-zhou_1641393112.png', 0, '2022-05-23 14:03:31', '2022-05-23 14:03:31');
+INSERT INTO `photos` VALUES ('1528617766343520258', '1528617766280605698', 'https://edu-19527.oss-cn-nanjing.aliyuncs.com/travel_GaoChun/776bdf0d08cf4b60bd9696fb44409f239866091_carolin-zhou_1634606834.png', 1, '2022-05-23 14:04:10', '2022-05-23 14:04:10');
+
+-- ----------------------------
+-- Table structure for role
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `role_desc` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+INSERT INTO `role` VALUES (1, 'ROLE_MANAGER', '超级管理员管理普通管理员');
+INSERT INTO `role` VALUES (2, 'ROLE_HOTEL', '管理旅馆信息');
+INSERT INTO `role` VALUES (3, 'ROLE_SCENIC', '管理景点信息');
+INSERT INTO `role` VALUES (4, 'ROLE_DELICACY', '管理美食信息');
+INSERT INTO `role` VALUES (5, 'ROLE_NOTICE', '管理公告信息');
+INSERT INTO `role` VALUES (6, 'ROLE_ROUTE', '管理旅游路线');
+INSERT INTO `role` VALUES (7, 'ROLE_NOTE', '管理游记信息');
+INSERT INTO `role` VALUES (8, 'ROLE_FEEDBACK', '管理反馈信息');
 
 -- ----------------------------
 -- Table structure for route_detail
@@ -227,5 +276,7 @@ CREATE TABLE `travel_note`  (
 -- Records of travel_note
 -- ----------------------------
 INSERT INTO `travel_note` VALUES ('1528359301754765313', 'zj', 'qqq@qq.com', '奥里给', 0, '2022-05-22 20:57:08', '2022-05-22 20:57:08');
+INSERT INTO `travel_note` VALUES ('1528602195874832386', 'zj', 'qqq@qq.com', '奥里给', 1, '2022-05-23 13:02:18', '2022-05-23 13:02:18');
+INSERT INTO `travel_note` VALUES ('1528617602061021186', 'zj', 'qqq@qq.com', '奥里给', 0, '2022-05-23 14:03:31', '2022-05-23 14:03:31');
 
 SET FOREIGN_KEY_CHECKS = 1;
