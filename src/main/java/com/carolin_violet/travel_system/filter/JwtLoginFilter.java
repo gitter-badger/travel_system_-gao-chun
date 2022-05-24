@@ -1,6 +1,7 @@
 package com.carolin_violet.travel_system.filter;
 
 import com.carolin_violet.travel_system.bean.Role;
+import com.carolin_violet.travel_system.bean.security.InputUserCache;
 import com.carolin_violet.travel_system.bean.security.LoginUser;
 import com.carolin_violet.travel_system.bean.security.SecurityUser;
 import com.carolin_violet.travel_system.security.TokenManager;
@@ -49,9 +50,10 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            LoginUser loginUser = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword(), new ArrayList<>()));
-        } catch (IOException e) {
+//            LoginUser loginUser = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
+//            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword(), new ArrayList<>()));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(InputUserCache.username, InputUserCache.password, new ArrayList<>()));
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

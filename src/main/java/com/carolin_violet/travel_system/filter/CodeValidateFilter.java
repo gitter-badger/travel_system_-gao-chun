@@ -1,0 +1,60 @@
+package com.carolin_violet.travel_system.filter;
+
+import com.carolin_violet.travel_system.bean.security.InputUserCache;
+import com.carolin_violet.travel_system.bean.security.LoginUser;
+import com.carolin_violet.travel_system.config.RedisConfig;
+import com.carolin_violet.travel_system.config.RedisUtil;
+import com.carolin_violet.travel_system.handler.MyException;
+import com.carolin_violet.travel_system.utils.R;
+import com.carolin_violet.travel_system.utils.ResponseUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * @ClassName CodeValidateFilter
+ * @Description 短信验证码过滤
+ * @Author zj
+ * @Date 2022/5/24 22:46
+ * @Version 1.0
+ */
+public class CodeValidateFilter extends OncePerRequestFilter {
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        LoginUser loginUser = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
+        InputUserCache.username = loginUser.getUsername();
+        InputUserCache.password = loginUser.getPassword();
+        InputUserCache.code = loginUser.getCode();
+        try {
+            if ("/admin/login".equals(request.getRequestURI()) &&
+                    request.getMethod().equalsIgnoreCase("post")) {
+
+                // 获取用户输入的短信验证码
+                String inputCode = loginUser.getCode();
+                // 获取redis中的短信验证码
+                String phone = loginUser.getUsername();
+                String code = RedisUtil.redisTemplate.opsForValue().get(phone + "msm");
+                // 判断是否正确
+                if(code == null||!code.equals(inputCode)){
+                    ResponseUtil.out(response, R.error().message("验证码错误"));
+                }
+            }
+        }catch (AuthenticationException e){
+            ResponseUtil.out(response, R.error().message("认证出错"));
+            //e.printStackTrace();
+            return;
+        }
+        filterChain.doFilter(request, response);
+    }
+}

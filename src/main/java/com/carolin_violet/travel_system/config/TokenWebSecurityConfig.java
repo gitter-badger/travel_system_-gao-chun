@@ -1,5 +1,6 @@
 package com.carolin_violet.travel_system.config;
 
+import com.carolin_violet.travel_system.filter.CodeValidateFilter;
 import com.carolin_violet.travel_system.filter.JwtLoginFilter;
 import com.carolin_violet.travel_system.filter.TokenAuthenticationFilter;
 import com.carolin_violet.travel_system.security.DefaultPasswordEncoder;
@@ -18,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * <p>
@@ -85,9 +87,12 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addLogoutHandler(myLogoutHandler) // 登出 myLogoutHandler 处理
 
                 .and()
+
+                // 前后代码略
+                // 添加短信验证码过滤器链
+                .addFilterBefore(new CodeValidateFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new JwtLoginFilter(authenticationManager(), tokenManager, redisTemplate)) // 认证交给 自定义 TokenLoginFilter 实现
                 .addFilter(new TokenAuthenticationFilter(authenticationManager(),tokenManager, redisTemplate))
-
                 // basic 方式
                 .httpBasic();
     }
@@ -110,6 +115,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
+                "/msm/send/**",
                 "/swagger-resources/**",
                 "/webjars/**", "/v2/**", "/swagger-ui.html/**"
         );

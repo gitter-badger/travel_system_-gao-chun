@@ -69,4 +69,5 @@ public class RedisConfig extends CachingConfigurerSupport{
                 .build();
         return cacheManager;
     }
+
 }
