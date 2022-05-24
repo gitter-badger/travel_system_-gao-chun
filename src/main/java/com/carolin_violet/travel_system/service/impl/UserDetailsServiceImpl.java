@@ -2,6 +2,7 @@ package com.carolin_violet.travel_system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.carolin_violet.travel_system.bean.Manager;
+import com.carolin_violet.travel_system.bean.Role;
 import com.carolin_violet.travel_system.bean.security.SecurityUser;
 import com.carolin_violet.travel_system.service.ManagerService;
 import com.carolin_violet.travel_system.service.PermissionService;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,11 +48,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("用户名不存在！");
         }
 
+        List<String> permissionList = permissionService.getPermissionListById(user.getId());
+
+
         SecurityUser securityUser = new SecurityUser();
-        securityUser.setUsername(user.getTelephone());
-        securityUser.setPassword(user.getPassword());
-        List<String> permissionListById = permissionService.getPermissionListById(user.getId());
-        securityUser.setPermissionValueList(permissionListById);  // 根据用户id获取权限列表
+
+        securityUser.setUser(user);
+        securityUser.setPermissionValueList(permissionList);
         return securityUser;
     }
 

@@ -6,6 +6,7 @@ import com.carolin_violet.travel_system.security.DefaultPasswordEncoder;
 import com.carolin_violet.travel_system.security.TokenLogoutHandler;
 import com.carolin_violet.travel_system.security.TokenManager;
 import com.carolin_violet.travel_system.security.UnauthorizedEntryPoint;
+import com.carolin_violet.travel_system.security.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,6 +28,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    // 未登录handler
+    @Autowired
+    private MyUnAuthEntryPoint myUnAuthEntryPoint;
+
+    // 无权限
+    @Autowired
+    private MyAccessDeniedHandler myAccessDeniedHandler;
+
+    //  登出handler处理
+    @Autowired
+    private MyLogoutHandler myLogoutHandler;
+
+    // 登录失败
+    @Autowired
+    private LoginFailedHandler loginFailedHandler;
+
+    // 登录成功
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
+
     private UserDetailsService userDetailsService;
     private TokenManager tokenManager;
     private DefaultPasswordEncoder defaultPasswordEncoder;
@@ -49,14 +71,25 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.exceptionHandling()
-                .authenticationEntryPoint(new UnauthorizedEntryPoint())
-                .and().csrf().disable()
+                .authenticationEntryPoint(myUnAuthEntryPoint) // 未登录 handler
+                .accessDeniedHandler(myAccessDeniedHandler) // 无权限
+
+                .and().csrf().disable() // 关闭 csrf 跨域请求
+
                 .authorizeRequests()
                 .anyRequest().authenticated()
-                .and().logout().logoutUrl("/admin/logout")
-                .addLogoutHandler(new TokenLogoutHandler(tokenManager,redisTemplate)).and()
-                .addFilter(new JwtLoginFilter(authenticationManager(), tokenManager, redisTemplate))
-                .addFilter(new TokenAuthenticationFilter(authenticationManager(), tokenManager, redisTemplate)).httpBasic();
+
+                .and()
+                .logout() // logout设定
+                .logoutUrl("/logouts")  //退出请求  /logouts 未定义，交给自定义handler实现功能
+                .addLogoutHandler(myLogoutHandler) // 登出 myLogoutHandler 处理
+
+                .and()
+                .addFilter(new JwtLoginFilter(authenticationManager(), tokenManager, redisTemplate)) // 认证交给 自定义 TokenLoginFilter 实现
+                .addFilter(new TokenAuthenticationFilter(authenticationManager(),tokenManager, redisTemplate))
+
+                // basic 方式
+                .httpBasic();
     }
 
     /**

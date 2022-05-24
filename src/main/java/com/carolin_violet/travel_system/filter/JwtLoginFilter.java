@@ -1,7 +1,8 @@
 package com.carolin_violet.travel_system.filter;
 
+import com.carolin_violet.travel_system.bean.Role;
+import com.carolin_violet.travel_system.bean.security.LoginUser;
 import com.carolin_violet.travel_system.bean.security.SecurityUser;
-import com.carolin_violet.travel_system.bean.security.UserLogin;
 import com.carolin_violet.travel_system.security.TokenManager;
 import com.carolin_violet.travel_system.utils.R;
 import com.carolin_violet.travel_system.utils.ResponseUtil;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ClassName JwtLoginFilter
@@ -38,6 +40,8 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         this.authenticationManager = authenticationManager;
         this.tokenManager = tokenManager;
         this.redisTemplate = redisTemplate;
+        this.setPostOnly(false); // 关闭登录只允许 post
+        // 设置登陆路径，并且post请求
         this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/login","POST"));
     }
 
@@ -45,15 +49,15 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            UserLogin user = new ObjectMapper().readValue(request.getInputStream(), UserLogin.class);
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), new ArrayList<>()));
+            LoginUser loginUser = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword(), new ArrayList<>()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * 登录成功
+     * 登录成功后调用的方法
      * @param req
      * @param res
      * @param chain
@@ -64,10 +68,13 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
-        SecurityUser user = (SecurityUser) auth.getPrincipal();
-        String token = tokenManager.createToken(user.getUsername());
-        System.out.println(user.toString());
-        redisTemplate.opsForValue().set(user.getUsername(), user.getPermissionValueList());
+
+        SecurityUser securityUser = (SecurityUser) auth.getPrincipal();
+        System.out.println("9999999999999999999999999999999999999999999");
+        System.out.println(securityUser.getPermissionValueList().toString());
+        // 根据用户名生产token
+        String token = tokenManager.createToken(securityUser.getUsername());
+        redisTemplate.opsForValue().set(securityUser.getUsername(), securityUser.getPermissionValueList());
         ResponseUtil.out(res, R.ok().data("token", token));
     }
 

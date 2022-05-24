@@ -9,6 +9,7 @@ import com.carolin_violet.travel_system.service.DelicacyService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,15 +29,15 @@ public class DelicacyController {
     private DelicacyService delicacyService;
 
     // 查询所有美食
-    @Secured("delicacy")
     @GetMapping("findAll")
+    @PreAuthorize("hasAnyAuthority('ROLE_DELICACY')")
     public R findAllDelicacy() {
         List<Delicacy> list = delicacyService.list(null);
         return R.ok().data("items", list);
     }
 
     // 添加美食信息
-    @Secured("delicacy")
+    @PreAuthorize("hasAnyAuthority('ROLE_DELICACY')")
     @PostMapping("addDelicacy")
     public R addDelicacy(@RequestBody Delicacy delicacy) {
         boolean save = delicacyService.save(delicacy);
@@ -48,7 +49,7 @@ public class DelicacyController {
     }
 
     // 修改美食信息
-    @Secured("delicacy")
+    @PreAuthorize("hasAnyAuthority('ROLE_DELICACY')")
     @PutMapping("updateDelicacy")
     public R updateDelicacy(@RequestBody Delicacy delicacy) {
         boolean flag = delicacyService.updateById(delicacy);
@@ -60,7 +61,7 @@ public class DelicacyController {
     }
 
     // 删除美食信息
-    @Secured("delicacy")
+    @PreAuthorize("hasAnyAuthority('ROLE_DELICACY')")
     @DeleteMapping("{id}")
     public R removeDelicacy(@PathVariable String id) {
         boolean flag = delicacyService.removeById(id);
@@ -72,7 +73,7 @@ public class DelicacyController {
     }
 
     // 根据展示优先级条件查询
-    @Secured("delicacy")
+    @PreAuthorize("hasAnyAuthority('ROLE_DELICACY')")
     @PostMapping("condition")
     public R findCondition(@RequestBody DelicacyQuery delicacyQuery) {
         QueryWrapper<Delicacy> wrapper = new QueryWrapper<>();

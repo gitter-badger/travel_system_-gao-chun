@@ -9,6 +9,7 @@ import com.carolin_violet.travel_system.service.TouristRouteService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class TouristRouteController {
     RouteDetailService routeDetailService;
 
     // 查询所有线路
-    @Secured("tourist_route")
+    @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
     @GetMapping("findAll")
     public R findAllRoutes() {
         List<TouristRoute> list = touristRouteService.list(null);
@@ -39,7 +40,7 @@ public class TouristRouteController {
     }
 
     // 根据线路id查询线路所有站点信息
-    @Secured("tourist_route")
+    @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
     @GetMapping("{id}/findAll")
     public R findAllSites(@PathVariable String id) {
         QueryWrapper<RouteDetail> wrapper = new QueryWrapper<>();
@@ -49,7 +50,7 @@ public class TouristRouteController {
     }
 
     // 添加线路并返回线路id
-    @Secured("tourist_route")
+    @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
     @PostMapping("addRoute")
     public R addRoute(@RequestBody TouristRoute touristRoute) {
         boolean save = touristRouteService.save(touristRoute);
@@ -61,7 +62,7 @@ public class TouristRouteController {
     }
 
     // 修改线路信息
-    @Secured("tourist_route")
+    @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
     @PutMapping("updateRoute")
     public R updateRoute(@RequestBody TouristRoute touristRoute) {
         boolean flag = touristRouteService.updateById(touristRoute);
@@ -73,7 +74,7 @@ public class TouristRouteController {
     }
 
     // 删除线路,并且删除线路对应的站点信息
-    @Secured("tourist_route")
+    @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
     @DeleteMapping("{id}")
     public R removeRoute(@PathVariable String id) {
         // 根据线路id删除

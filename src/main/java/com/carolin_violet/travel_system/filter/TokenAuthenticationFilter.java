@@ -1,8 +1,8 @@
 package com.carolin_violet.travel_system.filter;
 
+import com.carolin_violet.travel_system.bean.Manager;
 import com.carolin_violet.travel_system.security.TokenManager;
-import com.carolin_violet.travel_system.utils.R;
-import com.carolin_violet.travel_system.utils.ResponseUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.util.StringUtils;
+
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -29,6 +29,7 @@ import java.util.List;
  * @Version 1.0
  */
 public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
+
     private TokenManager tokenManager;
     private RedisTemplate redisTemplate;
 
@@ -41,26 +42,40 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        // token置于header里
-        String token = request.getHeader("token");
-        String userName = tokenManager.getUserFromToken(token);
-        List<String> permissionValueList = (List<String>) redisTemplate.opsForValue().get(userName);
-        System.out.println("77777777777777777777777777777777777777777777");
-        System.out.println(permissionValueList.toString());
-
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-
-        for(String permissionValue : permissionValueList) {
-            if(StringUtils.isEmpty(permissionValue)) continue;
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(permissionValue);
-            authorities.add(authority);
+        //获取当前认证成功用户权限信息
+        UsernamePasswordAuthenticationToken authRequest = getAuthentication(request);
+        if(authRequest != null){
+            // 有权限，则放入权限上下文中
+            SecurityContextHolder.getContext().setAuthentication(authRequest);
         }
-        System.out.println("88888888888888888888888888888888888888888888");
-        System.out.println(authorities.toString());
-        UsernamePasswordAuthenticationToken authResult = new UsernamePasswordAuthenticationToken(userName, token, authorities);
-        SecurityContextHolder.getContext().setAuthentication(authResult);
+        // 执行下一个 filter 过滤器链
+        chain.doFilter(request,response);
 
-        chain.doFilter(request, response);
+    }
+
+    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+        //从header获取token
+        String token = request.getHeader("token");
+        if(token != null) {
+            //从token获取用户名
+            String username = tokenManager.getUserFromToken(token);
+            System.out.println("99999999999999999999999999999999999");
+            System.out.println(username);
+
+//             登录成功时，会将权限数据存入redis
+//             这里是验证获取权限信息
+//             1、从redis中获取对应该用户的权限信息
+//             2、或从数据库中再次查询
+            System.out.println(redisTemplate.opsForValue().get(username));
+            List<String> permissionValueList = (List<String>) redisTemplate.opsForValue().get(username);
+            Collection<GrantedAuthority> authority = new ArrayList<>();
+            for(String permissionValue : permissionValueList) {
+                SimpleGrantedAuthority auth = new SimpleGrantedAuthority(permissionValue);
+                authority.add(auth);
+            }
+            return new UsernamePasswordAuthenticationToken(username,token,authority);
+        }
+        return null;
     }
 
 }

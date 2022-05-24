@@ -21,7 +21,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Role implements Serializable {
+public class Role implements Serializable, GrantedAuthority {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,5 +31,15 @@ public class Role implements Serializable {
     private String roleName;
 
     private String roleDesc;
+
+    /**
+     * 如果授予的权限可以当作一个String的话，就可以返回一个String
+     * @return
+     */
+    @JsonIgnore
+    @Override
+    public String getAuthority() {
+        return roleName;
+    }
 
 }

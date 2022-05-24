@@ -6,6 +6,7 @@ import com.carolin_violet.travel_system.service.RouteDetailService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -24,7 +25,7 @@ public class RouteDetailController {
     private RouteDetailService routeDetailService;
 
     // 添加站点信息
-    @Secured("tourist_route")
+    @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
     @PostMapping("addSite")
     public R addSite(@RequestBody RouteDetail routeDetail) {
         boolean save = routeDetailService.save(routeDetail);
@@ -36,7 +37,7 @@ public class RouteDetailController {
     }
 
     // 修改站点信息
-    @Secured("tourist_route")
+    @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
     @PutMapping("updateSite")
     public R updateSite(@RequestBody RouteDetail routeDetail) {
         boolean flag = routeDetailService.updateById(routeDetail);
@@ -48,7 +49,7 @@ public class RouteDetailController {
     }
 
     // 删除站点信息
-    @Secured("tourist_route")
+    @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
     @DeleteMapping("{id}")
     public R removeSite(@PathVariable String id) {
         boolean flag = routeDetailService.removeById(id);

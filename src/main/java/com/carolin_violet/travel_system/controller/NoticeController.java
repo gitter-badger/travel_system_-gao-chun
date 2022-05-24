@@ -8,6 +8,7 @@ import com.carolin_violet.travel_system.service.NoticeService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class NoticeController {
     private NoticeService noticeService;
 
     // 根据时间排序分页查询广告
-    @Secured("notice")
+    @PreAuthorize("hasAnyAuthority('ROLE_NOTICE')")
     @GetMapping("pageNotice/{current}/{limit}")
     public R findAllNotice(@PathVariable long current, @PathVariable long limit) {
         // 创建Page对象用于分页
@@ -47,7 +48,7 @@ public class NoticeController {
     }
 
     // 发布公告
-    @Secured("notice")
+    @PreAuthorize("hasAnyAuthority('ROLE_NOTICE')")
     @PostMapping("addNotice")
     public R addNotice(@RequestBody Notice notice) {
         boolean save = noticeService.save(notice);
@@ -59,7 +60,7 @@ public class NoticeController {
     }
 
     // 更新公告信息
-    @Secured("notice")
+    @PreAuthorize("hasAnyAuthority('ROLE_NOTICE')")
     @PutMapping("updateNotice")
     public R updateNotice(@RequestBody Notice notice) {
         boolean flag = noticeService.updateById(notice);
@@ -71,7 +72,7 @@ public class NoticeController {
     }
 
     // 删除公告
-    @Secured("notice")
+    @PreAuthorize("hasAnyAuthority('ROLE_NOTICE')")
     @DeleteMapping("{id}")
     public R removeNotice(@PathVariable String id) {
         boolean flag = noticeService.removeById(id);
