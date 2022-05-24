@@ -45,16 +45,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("用户名不存在！");
         }
-        // 返回UserDetails实现类(security中的User)
-//        SecurityUser secureUser = new SecurityUser();
-//        return secureUser;
 
-        System.out.println(user.getId());
-        System.out.println(user.getName());
-        System.out.println(user.getPassword());
         SecurityUser securityUser = new SecurityUser();
-        securityUser.setId(user.getId());
-        securityUser.setUsername(user.getName());
+        securityUser.setUsername(user.getTelephone());
         securityUser.setPassword(user.getPassword());
         System.out.println(securityUser.toString());
         return securityUser;

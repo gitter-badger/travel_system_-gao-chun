@@ -1,10 +1,11 @@
 package com.carolin_violet.travel_system.bean.security;
 
 import com.carolin_violet.travel_system.bean.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,16 +22,23 @@ import java.util.List;
 public class SecurityUser implements UserDetails {
 
 
-    private String id;
-    private String username;
+    private String username;  // 手机号
     private String password;
     private Integer status = 1;
-    private List<Role> roles = new ArrayList<>();
+
+    private List<String> permissionList = new ArrayList<>();
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        for(String permissionValue : permissionList) {
+            if(StringUtils.isEmpty(permissionValue)) continue;
+            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(permissionValue);
+            authorities.add(authority);
+        }
+
+        return authorities;
     }
 
     @Override

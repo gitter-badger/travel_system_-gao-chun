@@ -1,12 +1,12 @@
 package com.carolin_violet.travel_system.config;
 
 import com.carolin_violet.travel_system.filter.JwtLoginFilter;
+import com.carolin_violet.travel_system.filter.TokenAuthenticationFilter;
 import com.carolin_violet.travel_system.security.DefaultPasswordEncoder;
 import com.carolin_violet.travel_system.security.TokenLogoutHandler;
 import com.carolin_violet.travel_system.security.TokenManager;
 import com.carolin_violet.travel_system.security.UnauthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -55,8 +55,8 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and().logout().logoutUrl("/admin/logout")
                 .addLogoutHandler(new TokenLogoutHandler(tokenManager,redisTemplate)).and()
-                .addFilter(new JwtLoginFilter(authenticationManager(), tokenManager, redisTemplate));
-//                .addFilter(new TokenAuthenticationFilter(authenticationManager(), tokenManager, redisTemplate)).httpBasic()
+                .addFilter(new JwtLoginFilter(authenticationManager(), tokenManager, redisTemplate))
+                .addFilter(new TokenAuthenticationFilter(authenticationManager(), tokenManager, redisTemplate)).httpBasic();
     }
 
     /**
@@ -67,7 +67,6 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-//        auth.userDetailsService(userDetailsService);
     }
 
     /**
@@ -77,8 +76,9 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/api/**",
-                "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**"
+        web.ignoring().antMatchers(
+                "/swagger-resources/**",
+                "/webjars/**", "/v2/**", "/swagger-ui.html/**"
         );
     }
 }

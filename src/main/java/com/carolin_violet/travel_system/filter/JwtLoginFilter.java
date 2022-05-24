@@ -1,7 +1,7 @@
 package com.carolin_violet.travel_system.filter;
 
 import com.carolin_violet.travel_system.bean.security.SecurityUser;
-import com.carolin_violet.travel_system.bean.security.UserVo;
+import com.carolin_violet.travel_system.bean.security.UserLogin;
 import com.carolin_violet.travel_system.security.TokenManager;
 import com.carolin_violet.travel_system.utils.R;
 import com.carolin_violet.travel_system.utils.ResponseUtil;
@@ -19,10 +19,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @ClassName JwtLoginFilter
- * @Description TODO
+ * @Description 验证登录账户并返回token
  * @Author zj
  * @Date 2022/5/24 10:03
  * @Version 1.0
@@ -44,8 +45,8 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            UserVo user = new ObjectMapper().readValue(request.getInputStream(), UserVo.class);
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+            UserLogin user = new ObjectMapper().readValue(request.getInputStream(), UserLogin.class);
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), new ArrayList<>()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -63,9 +64,9 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
-        System.out.println("********************************************************************************");
         SecurityUser user = (SecurityUser) auth.getPrincipal();
         String token = tokenManager.createToken(user.getUsername());
+        redisTemplate.opsForValue().set(user.getUsername(), user.getPermissionList());
         ResponseUtil.out(res, R.ok().data("token", token));
     }
 
@@ -80,7 +81,6 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException e) throws IOException, ServletException {
-        System.out.println("----------------------------------------------------------------------------------------------");
         ResponseUtil.out(response, R.error());
     }
 }

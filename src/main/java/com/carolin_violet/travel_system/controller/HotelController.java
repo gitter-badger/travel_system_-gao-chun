@@ -7,6 +7,7 @@ import com.carolin_violet.travel_system.bean.conditionQuery.HotelQuery;
 import com.carolin_violet.travel_system.service.HotelService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class HotelController {
     private HotelService hotelService;
 
     // 查找所有旅馆
+    @Secured("hotel")
     @GetMapping("findAll")
     public R findAllHotel() {
         List<Hotel> list = hotelService.list(null);
@@ -33,6 +35,7 @@ public class HotelController {
     }
 
     // 添加旅馆
+    @Secured("hotel")
     @PostMapping("addHotel")
     public R addHotel(@RequestBody Hotel hotel) {
         boolean save = hotelService.save(hotel);
@@ -44,6 +47,7 @@ public class HotelController {
     }
 
     // 修改旅馆信息
+    @Secured("hotel")
     @PutMapping("updateHotel")
     public R updateHotel(@RequestBody Hotel hotel) {
         boolean flag = hotelService.updateById(hotel);
@@ -55,6 +59,7 @@ public class HotelController {
     }
 
     // 逻辑删除旅馆
+    @Secured("hotel")
     @DeleteMapping("{id}")
     public R removeHotel(@PathVariable String id) {
         boolean flag = hotelService.removeById(id);
@@ -66,6 +71,7 @@ public class HotelController {
     }
 
     // 根据展示优先级进行条件查询
+    @Secured("hotel")
     @PostMapping("condition")
     public R findCondition(@RequestBody HotelQuery hotelQuery) {
         QueryWrapper<Hotel> wrapper = new QueryWrapper<>();

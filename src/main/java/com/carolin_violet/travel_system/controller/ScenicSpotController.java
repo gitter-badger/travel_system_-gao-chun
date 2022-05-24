@@ -7,6 +7,7 @@ import com.carolin_violet.travel_system.bean.conditionQuery.ScenicSpotQuery;
 import com.carolin_violet.travel_system.service.ScenicSpotService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class ScenicSpotController {
     private ScenicSpotService scenicSpotService;
 
     // 查询所有景点
+    @Secured("scenic_spot")
     @GetMapping("findAll")
     public R findAllScenicSpot() {
         List<ScenicSpot> list = scenicSpotService.list(null);
@@ -34,6 +36,7 @@ public class ScenicSpotController {
     }
 
     // 添加景点
+    @Secured("scenic_spot")
     @PostMapping("addScenicSpot")
     public R AddScenicSpot(@RequestBody ScenicSpot scenicSpot) {
         boolean save = scenicSpotService.save(scenicSpot);
@@ -45,6 +48,7 @@ public class ScenicSpotController {
     }
 
     // 修改景点信息
+    @Secured("scenic_spot")
     @PutMapping("updateScenicSpot")
     public R updateScenicSpot(@RequestBody ScenicSpot scenicSpot) {
         boolean flag = scenicSpotService.updateById(scenicSpot);
@@ -56,6 +60,7 @@ public class ScenicSpotController {
     }
 
     // 删除景点
+    @Secured("scenic_spot")
     @DeleteMapping("{id}")
     public R removeScenicSpot(@PathVariable String id) {
         boolean flag = scenicSpotService.removeById(id);
@@ -67,6 +72,7 @@ public class ScenicSpotController {
     }
 
     // 根据展示优先级进行条件查询
+    @Secured("scenic_spot")
     @PostMapping("condition")
     public R findCondition(@RequestBody ScenicSpotQuery scenicSpotQuery) {
         QueryWrapper<ScenicSpot> wrapper = new QueryWrapper<>();

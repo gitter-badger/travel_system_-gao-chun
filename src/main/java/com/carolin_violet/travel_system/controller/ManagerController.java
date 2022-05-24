@@ -4,6 +4,7 @@ import com.carolin_violet.travel_system.bean.Manager;
 import com.carolin_violet.travel_system.service.ManagerService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class ManagerController {
     private ManagerService managerService;
 
     // 查询所有管理员信息
+    @Secured("manager")
     @GetMapping("findAll")
     public R findAllManager() {
         List<Manager> list = managerService.list(null);
@@ -30,6 +32,7 @@ public class ManagerController {
     }
 
     // 添加管理员信息
+    @Secured("manager")
     @PostMapping("addManager")
     public R addManager(@RequestBody Manager manager) {
         boolean save = managerService.save(manager);
@@ -41,6 +44,7 @@ public class ManagerController {
     }
 
     // 修改管理员信息
+    @Secured("manager")
     @PutMapping("updateManager")
     public R updateManager(@RequestBody Manager manager) {
         boolean flag = managerService.updateById(manager);
@@ -52,6 +56,7 @@ public class ManagerController {
     }
 
     // 逻辑删除管理员
+    @Secured("manager")
     @DeleteMapping("{id}")
     public R removeManger(@PathVariable String id) {
         boolean flag = managerService.removeById(id);

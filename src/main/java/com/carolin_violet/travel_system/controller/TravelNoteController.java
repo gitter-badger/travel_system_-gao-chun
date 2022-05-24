@@ -8,6 +8,7 @@ import com.carolin_violet.travel_system.bean.vo.TravelNoteVo;
 import com.carolin_violet.travel_system.service.TravelNoteService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class TravelNoteController {
     private TravelNoteService travelNoteService;
 
     // 分页查询游记
+    @Secured("travel_note")
     @RequestMapping("pageNote/{current}/{limit}")
     public R getPageNote(@PathVariable long current, @PathVariable long limit) {
         Page<TravelNote> travelNotePage = new Page<>(current, limit);
@@ -47,6 +49,7 @@ public class TravelNoteController {
 
 
     // 添加游记
+    @Secured("travel_note")
     @PostMapping("addNote")
     public R addNote(@RequestBody TravelNoteVo travelNoteVo) {
         travelNoteService.addNote(travelNoteVo);
@@ -54,6 +57,7 @@ public class TravelNoteController {
     }
 
     // 删除游记
+    @Secured("travel_note")
     @DeleteMapping("{id}")
     public R removeNote(@PathVariable String id) {
         travelNoteService.removePhotos(id);

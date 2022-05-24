@@ -8,6 +8,7 @@ import com.carolin_violet.travel_system.mapper.DelicacyMapper;
 import com.carolin_violet.travel_system.service.DelicacyService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class DelicacyController {
     private DelicacyService delicacyService;
 
     // 查询所有美食
+    @Secured("delicacy")
     @GetMapping("findAll")
     public R findAllDelicacy() {
         List<Delicacy> list = delicacyService.list(null);
@@ -34,6 +36,7 @@ public class DelicacyController {
     }
 
     // 添加美食信息
+    @Secured("delicacy")
     @PostMapping("addDelicacy")
     public R addDelicacy(@RequestBody Delicacy delicacy) {
         boolean save = delicacyService.save(delicacy);
@@ -45,6 +48,7 @@ public class DelicacyController {
     }
 
     // 修改美食信息
+    @Secured("delicacy")
     @PutMapping("updateDelicacy")
     public R updateDelicacy(@RequestBody Delicacy delicacy) {
         boolean flag = delicacyService.updateById(delicacy);
@@ -56,6 +60,7 @@ public class DelicacyController {
     }
 
     // 删除美食信息
+    @Secured("delicacy")
     @DeleteMapping("{id}")
     public R removeDelicacy(@PathVariable String id) {
         boolean flag = delicacyService.removeById(id);
@@ -67,6 +72,7 @@ public class DelicacyController {
     }
 
     // 根据展示优先级条件查询
+    @Secured("delicacy")
     @PostMapping("condition")
     public R findCondition(@RequestBody DelicacyQuery delicacyQuery) {
         QueryWrapper<Delicacy> wrapper = new QueryWrapper<>();
