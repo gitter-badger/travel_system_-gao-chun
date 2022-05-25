@@ -43,10 +43,18 @@ export default {
     })
   },
 
+  // 根据用户id查询用户权限
+  getPermissionById(id) {
+    return request({
+      url: `/travel_system/permission/findAll/${id}`,
+      method: 'get'
+    })
+  },
+
   // 根据用户id给用户添加权限
   addPermission(data) {
     return request({
-      url: '/travel_system/permission/addPerssion',
+      url: 'travel_system/permission/addPermission',
       method: 'post',
       data
     })
