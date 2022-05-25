@@ -46,7 +46,7 @@ public class Delicacy implements Serializable {
     private String picture;
 
     /**
-     * 展示优先级
+     * 展示优先级(用户主网站展示),可以自定义划分为1、2、3、4、5这5个等级
      */
     private Integer popular;
 

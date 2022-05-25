@@ -31,7 +31,9 @@ public class ScenicSpotController {
     @PreAuthorize("hasAnyAuthority('ROLE_SCENIC')")
     @GetMapping("findAll")
     public R findAllScenicSpot() {
-        List<ScenicSpot> list = scenicSpotService.list(null);
+        QueryWrapper<ScenicSpot> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("popular");
+        List<ScenicSpot> list = scenicSpotService.list(wrapper);
         return R.ok().data("items", list);
     }
 
@@ -71,14 +73,5 @@ public class ScenicSpotController {
         }
     }
 
-    // 根据展示优先级进行条件查询
-    @PreAuthorize("hasAnyAuthority('ROLE_SCENIC')")
-    @PostMapping("condition")
-    public R findCondition(@RequestBody ScenicSpotQuery scenicSpotQuery) {
-        QueryWrapper<ScenicSpot> wrapper = new QueryWrapper<>();
-        wrapper.eq("popular", scenicSpotQuery.getPopular());
-        List<ScenicSpot> scenicSpots = scenicSpotService.list(wrapper);
-        return R.ok().data("items", scenicSpots);
-    }
 }
 

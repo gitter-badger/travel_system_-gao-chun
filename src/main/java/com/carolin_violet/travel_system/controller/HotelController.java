@@ -26,11 +26,13 @@ public class HotelController {
     @Autowired
     private HotelService hotelService;
 
-    // 查找所有旅馆
+    // 查找所有旅馆, 按展示优先级降序排序
     @PreAuthorize("hasAnyAuthority('ROLE_HOTEL')")
     @GetMapping("findAll")
     public R findAllHotel() {
-        List<Hotel> list = hotelService.list(null);
+        QueryWrapper<Hotel> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("popular");
+        List<Hotel> list = hotelService.list(wrapper);
         return R.ok().data("items", list);
     }
 
@@ -68,16 +70,6 @@ public class HotelController {
         } else {
             return R.error();
         }
-    }
-
-    // 根据展示优先级进行条件查询
-    @PreAuthorize("hasAnyAuthority('ROLE_HOTEL')")
-    @PostMapping("condition")
-    public R findCondition(@RequestBody HotelQuery hotelQuery) {
-        QueryWrapper<Hotel> wrapper = new QueryWrapper<>();
-        wrapper.eq("popular", hotelQuery.getPopular());
-        List<Hotel> hotels = hotelService.list(wrapper);
-        return R.ok().data("items", hotels);
     }
 }
 

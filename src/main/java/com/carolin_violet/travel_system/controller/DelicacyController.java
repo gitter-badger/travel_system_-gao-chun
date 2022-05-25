@@ -30,7 +30,9 @@ public class DelicacyController {
     @GetMapping("findAll")
     @PreAuthorize("hasAnyAuthority('ROLE_DELICACY')")
     public R findAllDelicacy() {
-        List<Delicacy> list = delicacyService.list(null);
+        QueryWrapper<Delicacy> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("popular");
+        List<Delicacy> list = delicacyService.list(wrapper);
         return R.ok().data("items", list);
     }
 
@@ -70,16 +72,6 @@ public class DelicacyController {
         } else {
             return R.error();
         }
-    }
-
-    // 根据展示优先级条件查询
-    @PreAuthorize("hasAnyAuthority('ROLE_DELICACY')")
-    @PostMapping("condition")
-    public R findCondition(@RequestBody DelicacyQuery delicacyQuery) {
-        QueryWrapper<Delicacy> wrapper = new QueryWrapper<>();
-        wrapper.eq("popular", delicacyQuery.getPopular());
-        List<Delicacy> delicacies = delicacyService.list(wrapper);
-        return R.ok().data("items", delicacies);
     }
 }
 
