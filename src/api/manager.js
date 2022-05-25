@@ -33,7 +33,7 @@ export default {
       url: `/travel_system/manager/${id}`,
       method: 'delete'
     })
-  }
+  },
 
   // 查询所有角色
   getAllRole() {
@@ -50,7 +50,7 @@ export default {
       method: 'post',
       data
     })
-  }
+  },
 
   // 根据权限id删除权限信息
   delPermission(id) {
