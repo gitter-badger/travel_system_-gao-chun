@@ -56,5 +56,17 @@ public class PermissionController {
             return R.error();
         }
     }
+
+
+    // 根据用户id查询该用户所有权限记录
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER')")
+    @GetMapping("findAll/{id}")
+    public R findAllPermissionById(@PathVariable String id) {
+        QueryWrapper<Permission> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id", id);
+        List<Permission> list = permissionService.list(wrapper);
+        System.out.println(list.toString());
+        return R.ok().data("items", list);
+    }
 }
 
