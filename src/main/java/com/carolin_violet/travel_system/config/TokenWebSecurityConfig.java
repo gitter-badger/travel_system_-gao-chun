@@ -11,6 +11,7 @@ import com.carolin_violet.travel_system.security.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -87,6 +88,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().cors().configurationSource(corsConfigurationSource())
                 .and().csrf().disable() // 关闭 csrf 跨域请求
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/travel_system/oss/picture").permitAll()   // 由于上传图片时报跨域异常所以加上这个配置
                 .anyRequest().authenticated()
 
                 .and()
@@ -110,8 +112,8 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
         corsConfiguration.setAllowedMethods(Arrays.asList("*"));
-        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));   // *或者http://localhost:9528(vuecli的端口)
-        corsConfiguration.setMaxAge(3600L);
+        corsConfiguration.setAllowedOrigins(Arrays.asList("*", "http://localhost:9528"));   // *或者http://localhost:9528(vuecli的端口)
+        corsConfiguration.setMaxAge(360000L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
@@ -135,6 +137,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
+//                "/travel_system/oss/picture", // 忽略图片上传接口
                 "/travel_system/msm/send/**",   // 忽略短信上传接口
                 "/travel_system/feedback/addFeedback",   // 忽略反馈上传接口
                 "/travel_system/travel-note/addNote",    // 忽略游记上传接口
