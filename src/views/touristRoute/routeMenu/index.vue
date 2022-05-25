@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    权限管理
+    线路菜单
   </div>
 </template>
 
 <script>
 export default {
-  name: "Permission"
+  name: "TouristRoute"
 }
 </script>
 

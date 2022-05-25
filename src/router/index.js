@@ -51,24 +51,8 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' }
     }]
-  },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-    ]
   },
 
 // 超级管理员管理普通管理员
@@ -77,36 +61,132 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/manager/managerMenu',
     name: 'Manager',
-    meta: { title: 'Manager', icon: 'el-icon-s-help' },
+    meta: { title: '人员管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'managerMenu',
         name: 'ManagerMenu',
         component: () => import('@/views/manager/managerMenu/index'),
-        meta: { title: 'ManagerMenu', icon: 'table' }
+        meta: { title: '人员菜单', icon: 'table' }
       },
       {
         path: 'permission',
         name: 'Permission',
         component: () => import('@/views/manager/permission/index'),
-        meta: { title: 'Permission', icon: 'table' }
+        meta: { title: '权限管理', icon: 'table' },
+        hidden: true
       },
     ]
   },
 
+  // 旅馆管理
   {
-    path: '/form',
+    path: '/hotel',
     component: Layout,
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'hotelMenu',
+        name: 'HotelMenu',
+        component: () => import('@/views/hotel/index'),
+        meta: { title: '旅馆菜单', icon: 'table' }
       }
     ]
   },
 
+  // 景点管理
+  {
+    path: '/scenicSpot',
+    component: Layout,
+    children: [
+      {
+        path: 'scenicSpotMenu',
+        name: 'scenicSpotMenu',
+        component: () => import('@/views/scenicSpot/index'),
+        meta: { title: '景点菜单', icon: 'table' }
+      }
+    ]
+  },
+
+
+  // 美食管理
+  {
+    path: '/delicacy',
+    component: Layout,
+    children: [
+      {
+        path: 'delicacyMenu',
+        name: 'DelicacyMenu',
+        component: () => import('@/views/delicacy/index'),
+        meta: { title: '美食菜单', icon: 'table' }
+      }
+    ]
+  },
+
+  // 公告管理
+  {
+    path: '/notice',
+    component: Layout,
+    children: [
+      {
+        path: 'noticeMenu',
+        name: 'NoticeMenu',
+        component: () => import('@/views/notice/index'),
+        meta: { title: '公告菜单', icon: 'table' }
+      }
+    ]
+  },
+
+  // 旅游线路管理
+  {
+    path: '/touristRoute',
+    component: Layout,
+    redirect: '/toursiteRoute/routeMenu',
+    name: 'TouristRoute',
+    meta: { title: '旅游线路管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'routeMenu',
+        name: 'RouteMenu',
+        component: () => import('@/views/touristRoute/routeMenu/index'),
+        meta: { title: '线路菜单', icon: 'table' }
+      },
+      {
+        path: 'routeSites',
+        name: 'RouteSites',
+        component: () => import('@/views/touristRoute/routeSites/index'),
+        meta: { title: '线路站点', icon: 'table' },
+        hidden: true
+      },
+    ]
+  },
+
+  // 游记管理
+  {
+    path: '/travelNote',
+    component: Layout,
+    children: [
+      {
+        path: 'noteMenu',
+        name: 'NoteMenu',
+        component: () => import('@/views/travelNote/index'),
+        meta: { title: '游记菜单', icon: 'table' }
+      }
+    ]
+  },
+
+  // 反馈管理
+  {
+    path: '/feedback',
+    component: Layout,
+    children: [
+      {
+        path: 'feedbackMenu',
+        name: 'FeedbackMenu',
+        component: () => import('@/views/feedback/index'),
+        meta: { title: '反馈菜单', icon: 'table' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

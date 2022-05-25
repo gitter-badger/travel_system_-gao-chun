@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    权限管理
+    景点管理
   </div>
 </template>
 
 <script>
 export default {
-  name: "Permission"
+  name: "ScenicSpot"
 }
 </script>
 
