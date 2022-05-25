@@ -68,7 +68,7 @@
     </el-table>
 
 <!--   添加删除用的表单 -->
-    <el-dialog title="新增管理员" :visible.sync="dialogFormVisible">
+    <el-dialog title="管理员信息" :visible.sync="dialogFormVisible">
       <el-form :model="curManager">
         <el-form-item label="用户id" :label-width="formLabelWidth" v-show="flag===0">
           <el-input v-model="curManager.id" disabled autocomplete="off"></el-input>

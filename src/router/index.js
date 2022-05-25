@@ -188,6 +188,21 @@ export const constantRoutes = [
     ]
   },
 
+  // 上传图片专用
+  {
+    path: '/pictures',
+    component: Layout,
+    children: [
+      {
+        path: 'uploadPictures',
+        name: 'UploadPictures',
+        component: () => import('@/views/pictures/index'),
+        meta: { title: '图片上传', icon: 'table' },
+        hidden: true
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
