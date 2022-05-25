@@ -5,7 +5,6 @@ import com.carolin_violet.travel_system.bean.RouteDetail;
 import com.carolin_violet.travel_system.service.RouteDetailService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2022-05-22
  */
 @RestController
-@RequestMapping("/api/route-detail")
+@RequestMapping("/travel_system/route-detail")
 public class RouteDetailController {
 
     @Autowired

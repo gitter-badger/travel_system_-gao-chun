@@ -8,7 +8,6 @@ import com.carolin_violet.travel_system.bean.vo.TravelNoteVo;
 import com.carolin_violet.travel_system.service.TravelNoteService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ import java.util.List;
  * @since 2022-05-22
  */
 @RestController
-@RequestMapping("/api/travel-note")
+@RequestMapping("/travel_system/travel-note")
 public class TravelNoteController {
 
     @Autowired

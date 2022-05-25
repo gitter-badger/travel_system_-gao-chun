@@ -7,7 +7,6 @@ import com.carolin_violet.travel_system.bean.Notice;
 import com.carolin_violet.travel_system.service.NoticeService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +21,7 @@ import java.util.List;
  * @since 2022-05-22
  */
 @RestController
-@RequestMapping("/api/notice")
+@RequestMapping("/travel_system/notice")
 public class NoticeController {
     @Autowired
     private NoticeService noticeService;

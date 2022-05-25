@@ -2,12 +2,10 @@ package com.carolin_violet.travel_system.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.carolin_violet.travel_system.bean.Delicacy;
 import com.carolin_violet.travel_system.bean.Permission;
 import com.carolin_violet.travel_system.handler.MyException;
 import com.carolin_violet.travel_system.service.PermissionService;
 import com.carolin_violet.travel_system.utils.R;
-import io.jsonwebtoken.lang.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +21,7 @@ import java.util.List;
  * @since 2022-05-24
  */
 @RestController
-@RequestMapping("/api/permission")
+@RequestMapping("/travel_system/permission")
 public class PermissionController {
 
     @Autowired

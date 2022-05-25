@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/msm")
+@RequestMapping("/travel_system/msm")
 public class MsmController {
     @Autowired
     private MsmService msmService;

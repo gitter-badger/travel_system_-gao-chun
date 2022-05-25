@@ -4,11 +4,9 @@ package com.carolin_violet.travel_system.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.carolin_violet.travel_system.bean.Delicacy;
 import com.carolin_violet.travel_system.bean.conditionQuery.DelicacyQuery;
-import com.carolin_violet.travel_system.mapper.DelicacyMapper;
 import com.carolin_violet.travel_system.service.DelicacyService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +21,7 @@ import java.util.List;
  * @since 2022-05-22
  */
 @RestController
-@RequestMapping("/api/delicacy")
+@RequestMapping("/travel_system/delicacy")
 public class DelicacyController {
     @Autowired
     private DelicacyService delicacyService;

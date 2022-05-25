@@ -2,7 +2,6 @@ package com.carolin_violet.travel_system.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.carolin_violet.travel_system.bean.Manager;
-import com.carolin_violet.travel_system.bean.security.SecurityUser;
 import com.carolin_violet.travel_system.security.TokenManager;
 import com.carolin_violet.travel_system.service.ManagerService;
 import com.carolin_violet.travel_system.utils.R;
@@ -12,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -23,7 +21,7 @@ import java.util.List;
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/api/manager")
+@RequestMapping("/travel_system/manager")
 @CrossOrigin
 public class ManagerController {
     @Autowired

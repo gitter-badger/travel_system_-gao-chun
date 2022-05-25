@@ -8,7 +8,6 @@ import com.carolin_violet.travel_system.service.RouteDetailService;
 import com.carolin_violet.travel_system.service.TouristRouteService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ import java.util.List;
  * @since 2022-05-22
  */
 @RestController
-@RequestMapping("/api/tourist-route")
+@RequestMapping("/travel_system/tourist-route")
 public class TouristRouteController {
     @Autowired
     private TouristRouteService touristRouteService;

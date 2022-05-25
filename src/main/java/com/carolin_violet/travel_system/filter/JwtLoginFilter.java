@@ -40,7 +40,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         this.redisTemplate = redisTemplate;
         this.setPostOnly(false); // 关闭登录只允许 post
         // 设置登陆路径，并且post请求
-        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/login","POST"));
+        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/travel_system/login","POST"));
     }
 
     //这个方法是用来去尝试验证用户的
@@ -48,6 +48,9 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             LoginUser loginUser = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
+            System.out.println("-------------------------------------------------------------");
+            System.out.println(loginUser.getUsername());
+            System.out.println(loginUser.getPassword());
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword(), new ArrayList<>()));
 //            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(InputUserCache.username, InputUserCache.password, new ArrayList<>()));
         } catch (Exception e) {

@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 
 @RestController
-@RequestMapping("oss/picture")
+@RequestMapping("/travel_system/oss/picture")
 public class OssController {
     @Autowired
     private OssService ossService;

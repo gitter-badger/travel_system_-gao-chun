@@ -37,7 +37,7 @@ public class CodeValidateFilter extends OncePerRequestFilter {
         InputUserCache.password = loginUser.getPassword();
         InputUserCache.code = loginUser.getCode();
         try {
-            if ("/admin/login".equals(request.getRequestURI()) &&
+            if ("/travel_system/login".equals(request.getRequestURI()) &&
                     request.getMethod().equalsIgnoreCase("post")) {
 
                 // 获取用户输入的短信验证码

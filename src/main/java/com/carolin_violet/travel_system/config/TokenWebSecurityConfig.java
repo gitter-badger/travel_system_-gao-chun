@@ -11,15 +11,22 @@ import com.carolin_violet.travel_system.security.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 /**
  * <p>
@@ -76,14 +83,15 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(myUnAuthEntryPoint) // 未登录 handler
                 .accessDeniedHandler(myAccessDeniedHandler) // 无权限
 
-                .and().csrf().disable() // 关闭 csrf 跨域请求
 
+                .and().cors().configurationSource(corsConfigurationSource())
+                .and().csrf().disable() // 关闭 csrf 跨域请求
                 .authorizeRequests()
                 .anyRequest().authenticated()
 
                 .and()
                 .logout() // logout设定
-                .logoutUrl("/admin/logout")  //退出请求  /logouts 未定义，交给自定义handler实现功能
+                .logoutUrl("/travel_system/logout")  //退出请求  /logouts 未定义，交给自定义handler实现功能
                 .addLogoutHandler(myLogoutHandler) // 登出 myLogoutHandler 处理
 
                 .and()
@@ -95,6 +103,18 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new TokenAuthenticationFilter(authenticationManager(),tokenManager, redisTemplate))
                 // basic 方式
                 .httpBasic();
+    }
+
+    CorsConfigurationSource corsConfigurationSource() {
+        // 提供CorsConfiguration实例，并配置跨域信息
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+        corsConfiguration.setAllowedMethods(Arrays.asList("*"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));   // *或者http://localhost:9528(vuecli的端口)
+        corsConfiguration.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
     }
 
     /**
@@ -115,9 +135,9 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
-                "/msm/send/**",   // 忽略短信上传接口
-                "/api/feedback/addFeedback",   // 忽略反馈上传接口
-                "/api/travel-note/addNote",    // 忽略游记上传接口
+                "/travel_system/msm/send/**",   // 忽略短信上传接口
+                "/travel_system/feedback/addFeedback",   // 忽略反馈上传接口
+                "/travel_system/travel-note/addNote",    // 忽略游记上传接口
                 "/swagger-resources/**",
                 "/webjars/**", "/v2/**", "/swagger-ui.html/**"
         );

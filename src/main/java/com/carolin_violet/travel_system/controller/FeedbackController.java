@@ -8,7 +8,6 @@ import com.carolin_violet.travel_system.bean.vo.FeedbackVo;
 import com.carolin_violet.travel_system.service.FeedbackService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ import java.util.List;
  * @since 2022-05-22
  */
 @RestController
-@RequestMapping("/api/feedback")
+@RequestMapping("/travel_system/feedback")
 public class FeedbackController {
 
     @Autowired

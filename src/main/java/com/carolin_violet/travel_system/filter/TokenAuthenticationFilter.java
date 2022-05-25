@@ -46,6 +46,7 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
             // 有权限，则放入权限上下文中
             SecurityContextHolder.getContext().setAuthentication(authRequest);
         }
+
         // 执行下一个 filter 过滤器链
         chain.doFilter(request,response);
 

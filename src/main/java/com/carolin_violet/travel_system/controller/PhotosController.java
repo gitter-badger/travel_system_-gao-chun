@@ -22,7 +22,7 @@ import java.util.List;
  * @since 2022-05-22
  */
 @RestController
-@RequestMapping("/api/photos")
+@RequestMapping("/travel_system/photos")
 public class PhotosController {
     @Autowired
     private PhotosService photosService;
