@@ -18,7 +18,7 @@
       style="width: 100%">
       <el-table-column
         type="index"
-        :index="calcIndex*1"
+        :index="calcIndex"
         width="50">
       </el-table-column>
       <el-table-column
@@ -31,6 +31,7 @@
         prop="name"
         label="公告名称"
         align="center"
+        show-overflow-tooltip
         width="280">
       </el-table-column>
       <el-table-column
@@ -50,7 +51,7 @@
         label="公告描述"
         align="center"
         show-overflow-tooltip
-        width="480">
+        width="380">
       </el-table-column>
       <el-table-column
         label="添加时间"
@@ -70,7 +71,7 @@
           <el-button
             size="small"
             type="danger"
-            style="margin: 0 20px"
+            style="margin: 0 10px"
             @click="handleDelete(scope.$index, scope.row)"><i class="el-icon-delete"></i>删除</el-button>
         </template>
       </el-table-column>
@@ -166,12 +167,6 @@ export default {
 
   created() {
     this.getPageNotice()
-  },
-
-  computed: {
-    calcIndex(index) {
-      return (this.current -1) * this.limit + index
-    }
   },
 
   methods: {
@@ -285,8 +280,12 @@ export default {
 
     // 处理分页器分页
     handleCurrentChange(val) {
-      this.current = sval
+      this.current = val
       this.getPageNotice()
+    },
+
+    calcIndex(index) {
+      return (this.current -1) * this.limit + index + 1
     }
   }
 }

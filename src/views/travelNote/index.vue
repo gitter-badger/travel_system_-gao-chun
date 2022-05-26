@@ -11,7 +11,7 @@
       style="width: 100%">
       <el-table-column
         type="index"
-        :index="calcIndex*1"
+        :index="calcIndex"
         width="50">
       </el-table-column>
       <el-table-column
@@ -92,12 +92,6 @@ export default {
     this.getPageNote()
   },
 
-  computed: {
-    calcIndex(index) {
-      return (this.current -1) * this.limit + index
-    }
-  },
-
   methods: {
     // 调用接口获取所有游记信息
     async getPageNote() {
@@ -144,6 +138,10 @@ export default {
           mark_id: row.id   // 传入旅馆id
         }
       })
+    },
+
+    calcIndex(index) {
+      return (this.current -1) * this.limit + index + 1
     }
   }
 }

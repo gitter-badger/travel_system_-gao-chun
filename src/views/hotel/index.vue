@@ -18,7 +18,7 @@
       style="width: 100%">
       <el-table-column
         type="index"
-        :index="calcIndex*1"
+        :index="calcIndex"
         width="50">
       </el-table-column>
       <el-table-column
@@ -31,7 +31,8 @@
         prop="name"
         label="旅馆名称"
         align="center"
-        width="280">
+        show-overflow-tooltip
+        width="200">
       </el-table-column>
       <el-table-column
         label="旅馆图片"
@@ -76,7 +77,7 @@
           <el-button
             size="small"
             type="danger"
-            style="margin: 0 20px"
+            style="margin: 0 10px"
             @click="handleDelete(scope.$index, scope.row)"><i class="el-icon-delete"></i>删除</el-button>
           <el-button
             size="small"
@@ -178,12 +179,6 @@ export default {
 
   created() {
     this.getPageHotel()
-  },
-
-  computed: {
-    calcIndex(index) {
-      return (this.current -1) * this.limit + index
-    }
   },
 
   methods: {
@@ -307,6 +302,10 @@ export default {
     handleCurrentChange(val) {
       this.current = val
       this.getPageHotel()
+    },
+
+    calcIndex(index) {
+      return (this.current -1) * this.limit + index + 1
     }
   }
 }

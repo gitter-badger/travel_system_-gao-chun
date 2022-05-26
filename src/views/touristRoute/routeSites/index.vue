@@ -29,7 +29,8 @@
         prop="site"
         label="站点名称"
         align="center"
-        width="280">
+        show-overflow-tooltip
+        width="200">
       </el-table-column>
       <el-table-column
         prop="description"
@@ -74,7 +75,7 @@
           <el-button
             size="small"
             type="danger"
-            style="margin: 0 20px"
+            style="margin: 0 10px"
             @click="handleDelete(scope.$index, scope.row)"><i class="el-icon-delete"></i>删除</el-button>
         </template>
       </el-table-column>
