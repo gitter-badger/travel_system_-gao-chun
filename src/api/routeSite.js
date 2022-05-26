@@ -12,7 +12,7 @@ export default {
   // 添加站点信息
   addSite(data) {
     return request({
-      url: '/travel_system/route_detail/addSite',
+      url: '/travel_system/route-detail/addSite',
       method: 'post',
       data
     })
@@ -21,7 +21,7 @@ export default {
   // 修改站点信息
   updateSite(data) {
     return request({
-      url: '/travel_system/route_detail/updateSite',
+      url: '/travel_system/route-detail/updateSite',
       method: 'put',
       data
     })
@@ -30,8 +30,17 @@ export default {
   // 根据id删除站点
   removeSite(id) {
     return request({
-      url: `/travel_system/route_detail/${id}`,
+      url: `/travel_system/route-detail/${id}`,
       method: 'delete'
     })
-  }
+  },
+
+  // 获取所有分类及分类的数据名称
+  getAllItems() {
+    return request({
+      url: '/travel_system/route-detail/getAllItems',
+      method: 'get'
+    })
+  },
+
 }

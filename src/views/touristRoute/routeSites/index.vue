@@ -87,7 +87,13 @@
           <el-input v-model="curSite.id" disabled autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="站点名称" :label-width="formLabelWidth">
-          <el-input v-model="curSite.site" autocomplete="off"></el-input>
+          <el-cascader
+            :options="options"
+            :show-all-levels="false"
+            clearable
+            :placeholder="curSite.site || '请选择站点'"
+            v-model="tempData"
+          ></el-cascader>
         </el-form-item>
         <el-form-item label="站点描述" :label-width="formLabelWidth">
           <el-input
@@ -136,12 +142,15 @@ export default {
       curSite: {},
       dialogFormVisible: false,
       formLabelWidth: "120px",
+      options: [],
+      tempData: null
     }
   },
 
   created() {
     this.routeId = this.$route.query.route_id
     this.getAllSitesByRouteId()
+    this.getAllItems()
   },
 
   methods: {
@@ -154,6 +163,7 @@ export default {
 
     // 调用接口添加线路信息
     async addSite(data) {
+
       let res = await routeSite.addSite(data)
       if (res.code == 20000) {
         this.dialogFormVisible = false
@@ -195,31 +205,42 @@ export default {
       });
     },
 
+    // 获取所有分类及分类的数据名称
+    async getAllItems() {
+      let res = await routeSite.getAllItems()
+      this.options = res.data.items
+    },
+
     // 编辑按钮
     handleEdit(index, row) {
+      this.tempData = null
       this.curSite = Object.assign({}, row)
+      console.log(this.curSite)
       this.flag = 0
       this.dialogFormVisible = true
     },
 
     // 删除按钮
     handleDelete(index, row) {
-      this.removeRoute(row)
+      this.removeSite(row)
     },
 
 
     // 添加按钮
     handleAdd() {
-      this.curSite = {}
+      this.tempData = null
+      this.curSite = {routeId: this.routeId}
       this.flag = 1
       this.dialogFormVisible = true
     },
 
     // 确定按钮, flag为1就添加线路，为0就修改线路
     handleModify() {
+      this.curSite.site = this.tempData[1] || this.curSite.site
       if (this.flag === 1) {
         this.addSite(this.curSite)
       } else {
+        console.log(this.curSite)
         this.updateSite(this.curSite)
       }
     },
