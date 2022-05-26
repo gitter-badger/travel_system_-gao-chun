@@ -257,6 +257,7 @@ export default {
 
     // 图片上传成功
     handleUploadSuccess(res, file) {
+      this.$message.success("图片上传成功")
       this.dialogImageUrl = res.data.url
       this.curHotel.picture = res.data.url
     },

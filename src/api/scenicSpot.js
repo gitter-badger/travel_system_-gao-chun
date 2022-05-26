@@ -4,7 +4,7 @@ export default {
   // 获取所有景点信息
   getAllScenicSpot() {
     return request({
-      url: '/travel_system/scenicSpot/findAll',
+      url: '/travel_system/scenic-spot/findAll',
       method: 'get'
     })
   },
@@ -12,7 +12,7 @@ export default {
   // 添加景点信息
   addScenicSpot(data) {
     return request({
-      url: '/travel_system/scenicSpot/addScenicSpot',
+      url: '/travel_system/scenic-spot/addScenicSpot',
       method: 'post',
       data
     })
@@ -21,7 +21,7 @@ export default {
   // 修改景点信息
   updateScenicSpot(data) {
     return request({
-      url: '/travel_system/scenicSpot/updateScenicSpot',
+      url: '/travel_system/scenic-spot/updateScenicSpot',
       method: 'put',
       data
     })
@@ -30,7 +30,7 @@ export default {
   // 根据id删除景点
   removeScenicSpot(id) {
     return request({
-      url: `/travel_system/scenicSpot/${id}`,
+      url: `/travel_system/scenic-spot/${id}`,
       method: 'delete'
     })
   }
