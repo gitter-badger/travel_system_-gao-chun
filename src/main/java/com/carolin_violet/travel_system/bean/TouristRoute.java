@@ -31,11 +31,6 @@ public class TouristRoute implements Serializable {
     private String id;
 
     /**
-     * 线路类型(比如一日游，两日游)
-     */
-    private String type;
-
-    /**
      * 线路标题
      */
     private String title;

@@ -1,12 +1,15 @@
 package com.carolin_violet.travel_system.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.carolin_violet.travel_system.bean.RouteDetail;
 import com.carolin_violet.travel_system.service.RouteDetailService;
 import com.carolin_violet.travel_system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,6 +25,17 @@ public class RouteDetailController {
 
     @Autowired
     private RouteDetailService routeDetailService;
+
+
+    // 根据线路id查询线路所有站点信息
+    @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
+    @GetMapping("{id}/findAll")
+    public R findAllSites(@PathVariable String id) {
+        QueryWrapper<RouteDetail> wrapper = new QueryWrapper<>();
+        wrapper.eq("route_id", id);
+        List<RouteDetail> list = routeDetailService.list(wrapper);
+        return R.ok().data("items", list);
+    }
 
     // 添加站点信息
     @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")

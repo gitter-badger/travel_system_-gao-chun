@@ -2,6 +2,7 @@ package com.carolin_violet.travel_system.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.carolin_violet.travel_system.bean.ScenicSpot;
 import com.carolin_violet.travel_system.bean.conditionQuery.ScenicSpotQuery;
 import com.carolin_violet.travel_system.service.ScenicSpotService;
@@ -29,12 +30,16 @@ public class ScenicSpotController {
 
     // 查询所有景点
     @PreAuthorize("hasAnyAuthority('ROLE_SCENIC')")
-    @GetMapping("findAll")
-    public R findAllScenicSpot() {
+    @GetMapping("findAll/{cur}/{limit}")
+    public R findAllScenicSpot(@PathVariable long cur, @PathVariable long limit) {
+        Page<ScenicSpot> scenicSpotPage = new Page<>(cur, limit);
         QueryWrapper<ScenicSpot> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("popular");
-        List<ScenicSpot> list = scenicSpotService.list(wrapper);
-        return R.ok().data("items", list);
+
+        scenicSpotService.page(scenicSpotPage, wrapper);
+        List<ScenicSpot> records = scenicSpotPage.getRecords();
+        long total = scenicSpotPage.getTotal();
+        return R.ok().data("items", records).data("total", total);
     }
 
     // 添加景点

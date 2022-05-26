@@ -85,7 +85,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(myAccessDeniedHandler) // 无权限
 
 
-                .and().cors().configurationSource(corsConfigurationSource())
+                .and().cors().configurationSource(corsConfigurationSource())   // 解决跨域问题
                 .and().csrf().disable() // 关闭 csrf 跨域请求
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/travel_system/oss/picture").permitAll()   // 由于上传图片时报跨域异常所以加上这个配置

@@ -2,6 +2,7 @@ package com.carolin_violet.travel_system.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.carolin_violet.travel_system.bean.Delicacy;
 import com.carolin_violet.travel_system.bean.conditionQuery.DelicacyQuery;
 import com.carolin_violet.travel_system.service.DelicacyService;
@@ -27,13 +28,18 @@ public class DelicacyController {
     private DelicacyService delicacyService;
 
     // 查询所有美食
-    @GetMapping("findAll")
+    @GetMapping("findAll/{cur}/{limit}")
     @PreAuthorize("hasAnyAuthority('ROLE_DELICACY')")
-    public R findAllDelicacy() {
+    public R findAllDelicacy(@PathVariable long cur, @PathVariable long limit) {
+        Page<Delicacy> delicacyPage = new Page<>(cur, limit);
         QueryWrapper<Delicacy> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("popular");
-        List<Delicacy> list = delicacyService.list(wrapper);
-        return R.ok().data("items", list);
+
+        delicacyService.page(delicacyPage, wrapper);
+
+        long total = delicacyPage.getTotal();
+        List<Delicacy> records = delicacyPage.getRecords();
+        return R.ok().data("items", records).data("total", total);
     }
 
     // 添加美食信息

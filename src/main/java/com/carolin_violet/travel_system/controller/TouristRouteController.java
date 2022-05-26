@@ -2,6 +2,7 @@ package com.carolin_violet.travel_system.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.carolin_violet.travel_system.bean.RouteDetail;
 import com.carolin_violet.travel_system.bean.TouristRoute;
 import com.carolin_violet.travel_system.service.RouteDetailService;
@@ -32,20 +33,17 @@ public class TouristRouteController {
 
     // 查询所有线路
     @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
-    @GetMapping("findAll")
-    public R findAllRoutes() {
-        List<TouristRoute> list = touristRouteService.list(null);
-        return R.ok().data("items", list);
-    }
+    @GetMapping("findAll/{cur}/{limit}")
+    public R findAllRoutes(@PathVariable long cur, @PathVariable long limit) {
+        Page<TouristRoute> touristRoutePage = new Page<>(cur, limit);
+        QueryWrapper<TouristRoute> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("create_time");
 
-    // 根据线路id查询线路所有站点信息
-    @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
-    @GetMapping("{id}/findAll")
-    public R findAllSites(@PathVariable String id) {
-        QueryWrapper<RouteDetail> wrapper = new QueryWrapper<>();
-        wrapper.eq("route_id", id);
-        List<RouteDetail> list = routeDetailService.list(wrapper);
-        return R.ok().data("items", list);
+        touristRouteService.page(touristRoutePage, wrapper);
+
+        List<TouristRoute> records = touristRoutePage.getRecords();
+        long total = touristRoutePage.getTotal();
+        return R.ok().data("items", records).data("total", total);
     }
 
     // 添加线路并返回线路id
@@ -60,7 +58,7 @@ public class TouristRouteController {
         }
     }
 
-    // 修改线路信息
+    // 修改线路基本信息
     @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
     @PutMapping("updateRoute")
     public R updateRoute(@RequestBody TouristRoute touristRoute) {

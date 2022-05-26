@@ -2,6 +2,7 @@ package com.carolin_violet.travel_system.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.carolin_violet.travel_system.bean.Hotel;
 import com.carolin_violet.travel_system.bean.conditionQuery.HotelQuery;
 import com.carolin_violet.travel_system.service.HotelService;
@@ -28,12 +29,17 @@ public class HotelController {
 
     // 查找所有旅馆, 按展示优先级降序排序
     @PreAuthorize("hasAnyAuthority('ROLE_HOTEL')")
-    @GetMapping("findAll")
-    public R findAllHotel() {
+    @GetMapping("findAll/{cur}/{limit}")
+    public R findAllHotel(@PathVariable long cur, @PathVariable long limit) {
+        Page<Hotel> hotelPage = new Page<>(cur, limit);
         QueryWrapper<Hotel> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("popular");
-        List<Hotel> list = hotelService.list(wrapper);
-        return R.ok().data("items", list);
+
+        hotelService.page(hotelPage, wrapper);
+
+        long total = hotelPage.getTotal();
+        List<Hotel> records = hotelPage.getRecords();
+        return R.ok().data("items", records).data("total", total);
     }
 
     // 添加旅馆
@@ -48,7 +54,7 @@ public class HotelController {
         }
     }
 
-    // 修改旅馆信息
+    // 修改旅馆信息 TODO 如果修改了图片就要删除oss的图片并更换新的
     @PreAuthorize("hasAnyAuthority('ROLE_HOTEL')")
     @PutMapping("updateHotel")
     public R updateHotel(@RequestBody Hotel hotel) {
