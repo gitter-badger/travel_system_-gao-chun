@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -71,6 +72,14 @@ public class RouteDetailController {
         } else {
             return R.error();
         }
+    }
+
+    // 获取所有分类及分类的数据名称
+    @PreAuthorize("hasAnyAuthority('ROLE_ROUTE')")
+    @GetMapping("getAllItems")
+    public R getAllItems() {
+       List<Map> allItems = routeDetailService.getAllItems();
+        return R.ok().data("items", allItems);
     }
 }
 

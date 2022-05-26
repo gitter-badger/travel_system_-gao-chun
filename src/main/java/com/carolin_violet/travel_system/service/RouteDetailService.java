@@ -3,6 +3,9 @@ package com.carolin_violet.travel_system.service;
 import com.carolin_violet.travel_system.bean.RouteDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RouteDetailService extends IService<RouteDetail> {
 
+    List<Map> getAllItems();
 }
