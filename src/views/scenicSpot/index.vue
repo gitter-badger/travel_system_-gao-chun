@@ -18,6 +18,7 @@
       style="width: 100%">
       <el-table-column
         type="index"
+        :index="calcIndex*1"
         width="50">
       </el-table-column>
       <el-table-column
@@ -178,6 +179,12 @@ export default {
 
   created() {
     this.getPageScenicSpot()
+  },
+
+  computed: {
+    calcIndex(index) {
+      return (this.current -1) * this.limit + index
+    }
   },
 
   methods: {
