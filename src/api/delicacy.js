@@ -2,9 +2,9 @@ import request from '@/utils/request'
 
 export default {
   // 获取所有美食信息
-  getAllDelicacy() {
+  getPageDelicacy(cur, limit) {
     return request({
-      url: '/travel_system/delicacy/findAll',
+      url: `/travel_system/delicacy/findAll/${cur}/${limit}`,
       method: 'get'
     })
   },

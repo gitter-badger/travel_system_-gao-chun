@@ -49,7 +49,7 @@
         label="公告描述"
         align="center"
         show-overflow-tooltip
-        width="280">
+        width="480">
       </el-table-column>
       <el-table-column
         label="添加时间"
@@ -77,7 +77,6 @@
 <!--    分页器-->
     <el-pagination
       background
-      @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="current"
       layout="prev, pager, next, total"
@@ -279,7 +278,7 @@ export default {
 
     // 处理分页器分页
     handleCurrentChange(val) {
-      this.current = this.val
+      this.current = sval
       this.getPageNotice()
     }
   }

@@ -2,9 +2,9 @@ import request from '@/utils/request'
 
 export default {
   // 获取所有旅馆信息
-  getAllHotel() {
+  getPageHotel(cur, limit) {
     return request({
-      url: '/travel_system/hotel/findAll',
+      url: `/travel_system/hotel/findAll/${cur}/${limit}`,
       method: 'get'
     })
   },

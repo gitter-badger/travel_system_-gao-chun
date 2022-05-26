@@ -85,6 +85,15 @@
       </el-table-column>
     </el-table>
 
+    <!--    分页器-->
+    <el-pagination
+      background
+      @current-change="handleCurrentChange"
+      :current-page="current"
+      layout="prev, pager, next, total"
+      :total="total">
+    </el-pagination>
+
     <!--   添加删除用的表单 -->
     <el-dialog title="美食信息" :visible.sync="dialogFormVisible">
       <el-form :model="curDelicacy">
@@ -160,19 +169,23 @@ export default {
       formLabelWidth: "120px",
       dialogImageUrl: '',
       dialogVisible: false,
-      disabled: false
+      disabled: false,
+      total: null,
+      current: 1,
+      limit: 5
     }
   },
 
   created() {
-    this.getAllDelicacy()
+    this.getPageDelicacy()
   },
 
   methods: {
     // 调用接口获取所有美食信息
-    async getAllDelicacy() {
-      let res = await delicacy.getAllDelicacy()
+    async getPageDelicacy() {
+      let res = await delicacy.getPageDelicacy(this.current, this.limit)
       this.delicacyList = res.data.items
+      this.total = res.data.total
     },
 
     // 调用接口添加美食信息
@@ -181,7 +194,7 @@ export default {
       if (res.code == 20000) {
         this.dialogFormVisible = false
         this.$message.success("添加成功")
-        this.getAllDelicacy()
+        this.getPageDelicacy()
       } else {
         this.$message.error("添加失败")
       }
@@ -193,7 +206,7 @@ export default {
       if (res.code == 20000) {
         this.dialogFormVisible = false
         this.$message.success("修改成功")
-        this.getAllDelicacy()
+        this.getPageDelicacy()
       } else {
         this.$message.error("修改失败")
       }
@@ -208,7 +221,7 @@ export default {
       }).then(async () => {
         let res = await delicacy.removeDelicacy(data.id)
         if (res.code == 20000) {
-          this.getAllDelicacy()
+          this.getPageDelicacy()
           this.$message.success("删除成功")
         } else {
           this.$message.error("删除失败")
@@ -282,6 +295,12 @@ export default {
         this.$message.error('上传图片大小不能超过 30MB!');
       }
       return isJPG || isPng && isLt30M;
+    },
+
+    // 处理分页器分页
+    handleCurrentChange(val) {
+      this.current = val
+      this.getPageScenicSpot()
     }
   }
 }

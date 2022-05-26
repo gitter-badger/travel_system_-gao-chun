@@ -2,9 +2,9 @@ import request from '@/utils/request'
 
 export default {
   // 获取所有旅游线路信息
-  getAllRoute() {
+  getPageRoute(cur, limit) {
     return request({
-      url: '/travel_system/tourist-route/findAll',
+      url: `/travel_system/tourist-route/findAll/${cur}/${limit}`,
       method: 'get'
     })
   },
@@ -28,18 +28,9 @@ export default {
   },
 
   // 根据id删除旅游线路
-  removeHotel(id) {
+  removeRoute(id) {
     return request({
       url: `/travel_system/tourist-route/${id}`,
       method: 'delete'
     })
-  },
-
-  // 根据线路id查询该线路所有站点信息
-  getAllSitesByRouteId(id) {
-    return request({
-      url: `/travel_system/tourist-route/${id}/findAll`,
-      method: 'get'
-    })
-  }
-}
+  }}

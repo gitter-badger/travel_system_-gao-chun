@@ -6,7 +6,17 @@
 
 <script>
 export default {
-  name: "routeSites"
+  name: "routeSites",
+  data () {
+    return {
+      routeId: null,
+    }
+  },
+
+  created() {
+    console.log(this.$route.query.route_id)
+    this.routeId = this.$route.query.route_id
+  }
 }
 </script>
 

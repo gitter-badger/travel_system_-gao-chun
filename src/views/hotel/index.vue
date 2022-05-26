@@ -84,6 +84,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <!--    分页器-->
+    <el-pagination
+      background
+      @current-change="handleCurrentChange"
+      :current-page="current"
+      layout="prev, pager, next, total"
+      :total="total">
+    </el-pagination>
 
     <!--   添加删除用的表单 -->
     <el-dialog title="旅馆信息" :visible.sync="dialogFormVisible">
@@ -160,19 +168,23 @@ export default {
       formLabelWidth: "120px",
       dialogImageUrl: '',
       dialogVisible: false,
-      disabled: false
+      disabled: false,
+      current: 1,
+      limit: 5,
+      total: null
     }
   },
 
   created() {
-    this.getAllHotel()
+    this.getPageHotel()
   },
 
   methods: {
     // 调用接口获取所有旅馆信息
-    async getAllHotel() {
-      let res = await hotel.getAllHotel()
+    async getPageHotel() {
+      let res = await hotel.getPageHotel(this.current, this.limit)
       this.hotelList = res.data.items
+      this.total = res.data.total
     },
 
     // 调用接口添加旅馆信息
@@ -181,7 +193,7 @@ export default {
       if (res.code == 20000) {
         this.dialogFormVisible = false
         this.$message.success("添加成功")
-        this.getAllHotel()
+        this.getPageHotel()
       } else {
         this.$message.error("添加失败")
       }
@@ -193,7 +205,7 @@ export default {
       if (res.code == 20000) {
         this.dialogFormVisible = false
         this.$message.success("修改成功")
-        this.getAllHotel()
+        this.getPageHotel()
       } else {
         this.$message.error("修改失败")
       }
@@ -208,7 +220,7 @@ export default {
       }).then(async () => {
         let res = await hotel.removeHotel(data.id)
         if (res.code == 20000) {
-          this.getAllManager()
+          this.getPageHotel()
           this.$message.success("删除成功")
         } else {
           this.$message.error("删除失败")
@@ -282,6 +294,12 @@ export default {
         this.$message.error('上传图片大小不能超过 30MB!');
       }
       return isJPG || isPng && isLt30M;
+    },
+
+    // 处理分页器分页
+    handleCurrentChange(val) {
+      this.current = val
+      this.getPageHotel()
     }
   }
 }

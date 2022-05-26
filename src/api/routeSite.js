@@ -2,6 +2,13 @@ import request from '@/utils/request'
 
 export default {
 
+  // 根据线路id查询该线路所有站点信息
+  getAllSitesByRouteId(id) {
+    return request({
+      url: `/travel_system/route-detail/${id}/findAll`,
+      method: 'get'
+    })
+  },
   // 添加站点信息
   addSite(data) {
     return request({

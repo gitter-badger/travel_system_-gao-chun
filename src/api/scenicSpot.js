@@ -2,9 +2,9 @@ import request from '@/utils/request'
 
 export default {
   // 获取所有景点信息
-  getAllScenicSpot() {
+  getPageScenicSpot(cur, limit) {
     return request({
-      url: '/travel_system/scenic-spot/findAll',
+      url: `/travel_system/scenic-spot/findAll/${cur}/${limit}`,
       method: 'get'
     })
   },
