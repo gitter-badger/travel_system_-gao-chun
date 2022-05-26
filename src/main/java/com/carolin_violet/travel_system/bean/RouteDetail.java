@@ -2,6 +2,7 @@ package com.carolin_violet.travel_system.bean;
 
 import com.baomidou.mybatisplus.annotation.*;
 
+import java.sql.Time;
 import java.util.Date;
 
 import java.io.Serializable;
@@ -49,15 +50,15 @@ public class RouteDetail implements Serializable {
     /**
      * 站点活动开始时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date startTime;
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    private Time startTime;
 
     /**
      * 站点活动结束时间
      * @DateTimeFormat 将前端传过来的时间字符串转换成datetime
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date endTime;
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    private Time endTime;
 
     /**
      * 站点活动详情描述

@@ -32,7 +32,7 @@ public class RouteDetailController {
     @GetMapping("{id}/findAll")
     public R findAllSites(@PathVariable String id) {
         QueryWrapper<RouteDetail> wrapper = new QueryWrapper<>();
-        wrapper.eq("route_id", id);
+        wrapper.eq("route_id", id).orderByAsc("sort");
         List<RouteDetail> list = routeDetailService.list(wrapper);
         return R.ok().data("items", list);
     }
