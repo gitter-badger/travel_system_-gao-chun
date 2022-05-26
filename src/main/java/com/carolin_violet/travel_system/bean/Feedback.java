@@ -31,6 +31,12 @@ public class Feedback implements Serializable {
     private String id;
 
     /**
+     * 游客昵称
+     */
+    @TableField("nickName")
+    private String nickName;
+
+    /**
      * 游客邮箱
      */
     private String mail;

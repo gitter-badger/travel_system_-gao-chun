@@ -11,7 +11,7 @@
  Target Server Version : 80025
  File Encoding         : 65001
 
- Date: 26/05/2022 16:29:35
+ Date: 26/05/2022 20:26:10
 */
 
 SET NAMES utf8mb4;
@@ -45,6 +45,7 @@ INSERT INTO `delicacy` VALUES ('1529088864428240897', '米糕', '很好吃', 'ht
 DROP TABLE IF EXISTS `feedback`;
 CREATE TABLE `feedback`  (
   `id` char(19) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '反馈id',
+  `nickName` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '游客昵称',
   `mail` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '游客邮箱',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '反馈内容',
   `is_deleted` tinyint(0) NOT NULL COMMENT '逻辑删除',
@@ -56,8 +57,8 @@ CREATE TABLE `feedback`  (
 -- ----------------------------
 -- Records of feedback
 -- ----------------------------
-INSERT INTO `feedback` VALUES ('1528361382464978945', 'wq@163.com', '卧槽', 0, '2022-05-22 21:05:24', '2022-05-22 21:05:24');
-INSERT INTO `feedback` VALUES ('1528617766280605698', 'wq@163.com', '卧槽', 0, '2022-05-23 14:04:10', '2022-05-23 14:04:10');
+INSERT INTO `feedback` VALUES ('1528361382464978945', 'asdfd ', 'wq@163.com', '卧槽', 0, '2022-05-22 21:05:24', '2022-05-22 21:05:24');
+INSERT INTO `feedback` VALUES ('1528617766280605698', 'sdgsdg', 'wq@163.com', '卧槽', 0, '2022-05-23 14:04:10', '2022-05-23 14:04:10');
 
 -- ----------------------------
 -- Table structure for hotel
@@ -132,7 +133,7 @@ CREATE TABLE `permission`  (
   `user_id` char(19) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `role_id` int(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permission
@@ -213,8 +214,9 @@ CREATE TABLE `route_detail`  (
 -- ----------------------------
 -- Records of route_detail
 -- ----------------------------
-INSERT INTO `route_detail` VALUES ('1528329486771171330', '1528314711727235073', '高淳老街', 1, '古老美丽', '11:59:57', '17:59:57', 0, '2022-05-22 18:58:39', '2022-05-22 18:58:39');
+INSERT INTO `route_detail` VALUES ('1528329486771171330', '1528314711727235073', '狮王旅馆', 1, '古老美丽', '11:59:57', '17:59:57', 0, '2022-05-22 18:58:39', '2022-05-26 19:31:41');
 INSERT INTO `route_detail` VALUES ('1528329689679015937', '1528314711727235073', '游子山', 2, '4A景区qq', '08:59:57', '17:59:57', 0, '2022-05-22 18:59:28', '2022-05-22 19:01:57');
+INSERT INTO `route_detail` VALUES ('1529788157329973250', '1528314711727235073', '狮王旅馆', 3, '挖坟公司返回干饭加个红客户尽快', '19:34:48', '21:34:49', 0, '2022-05-26 19:34:53', '2022-05-26 19:34:53');
 
 -- ----------------------------
 -- Table structure for scenic_spot
