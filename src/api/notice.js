@@ -1,10 +1,14 @@
 import request from '@/utils/request'
 
 export default {
-  // 获取所有公告信息
-  getAllNotice() {
+  /*
+  获取所有公告信息
+  @cur  页码
+  @limit 每页有多少条记录
+  * */
+  getPageNotice(cur, limit) {
     return request({
-      url: '/travel_system/notice/findAll',
+      url: `/travel_system/notice/pageNotice/${cur}/${limit}`,
       method: 'get'
     })
   },

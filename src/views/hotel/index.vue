@@ -122,7 +122,12 @@
 <!--          -->
         </el-form-item>
         <el-form-item label="旅馆描述" :label-width="formLabelWidth">
-          <el-input v-model="curHotel.description"  autocomplete="off"></el-input>
+          <el-input
+            v-model="curHotel.description"
+            autocomplete="off"
+            type="textarea"
+            :rows="4"
+            placeholder="请输入内容"></el-input>
         </el-form-item>
         <el-form-item label="旅馆优先级" :label-width="formLabelWidth">
           <el-input v-model="curHotel.popular"  autocomplete="off"></el-input>
@@ -174,6 +179,7 @@ export default {
     async addHotel(data) {
       let res = await hotel.addHotel(data)
       if (res.code == 20000) {
+        this.dialogFormVisible = false
         this.$message.success("添加成功")
         this.getAllHotel()
       } else {
@@ -185,6 +191,7 @@ export default {
     async updateHotel(data) {
       let res = await hotel.updateHotel(data)
       if (res.code == 20000) {
+        this.dialogFormVisible = false
         this.$message.success("修改成功")
         this.getAllHotel()
       } else {

@@ -122,7 +122,12 @@
           <!--          -->
         </el-form-item>
         <el-form-item label="景点描述" :label-width="formLabelWidth">
-          <el-input v-model="curScenicSpot.description"  autocomplete="off"></el-input>
+          <el-input
+            v-model="curScenicSpot.description"
+            autocomplete="off"
+            type="textarea"
+            :rows="4"
+            placeholder="请输入内容"></el-input>
         </el-form-item>
         <el-form-item label="景点优先级" :label-width="formLabelWidth">
           <el-input v-model="curScenicSpot.popular"  autocomplete="off"></el-input>
@@ -164,16 +169,17 @@ export default {
   },
 
   methods: {
-    // 调用接口获取所有旅馆信息
+    // 调用接口获取所有景点信息
     async getAllScenicSpot() {
       let res = await scenicSpot.getAllScenicSpot()
       this.scenicSpotList = res.data.items
     },
 
-    // 调用接口添加旅馆信息
+    // 调用接口添加景点信息
     async addScenicSpot(data) {
       let res = await scenicSpot.addScenicSpot(data)
       if (res.code == 20000) {
+        this.dialogFormVisible = false
         this.$message.success("添加成功")
         this.getAllScenicSpot()
       } else {
@@ -181,10 +187,11 @@ export default {
       }
     },
 
-    // 调用接口修改旅馆信息
+    // 调用接口修改景点信息
     async updateScenicSpot(data) {
       let res = await scenicSpot.updateScenicSpot(data)
       if (res.code == 20000) {
+        this.dialogFormVisible = false
         this.$message.success("修改成功")
         this.getAllScenicSpot()
       } else {
@@ -192,7 +199,7 @@ export default {
       }
     },
 
-    // 调用接口根据id删除旅馆
+    // 调用接口根据id删除景点
     removeScenicSpot(data) {
       this.$confirm(`此操作将永久删除${data.name}, 是否继续?`, '提示', {
         confirmButtonText: '确定',
@@ -228,7 +235,7 @@ export default {
       this.$router.push({
         path: "/pictures/uploadPictures",
         query: {
-          mark_id: row.id   // 传入旅馆id
+          mark_id: row.id   // 传入景点id
         }
       })
     },
@@ -240,7 +247,7 @@ export default {
       this.dialogFormVisible = true
     },
 
-    // 确定按钮, flag为1就添加旅馆，为0就修改旅馆
+    // 确定按钮, flag为1就添加景点，为0就修改景点
     handleModify() {
       if (this.flag === 1) {
         this.addScenicSpot(this.curScenicSpot)
