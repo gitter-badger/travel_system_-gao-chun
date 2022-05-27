@@ -89,6 +89,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable() // 关闭 csrf 跨域请求
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/travel_system/oss/picture").permitAll()   // 由于上传图片时报跨域异常所以加上这个配置
+                .antMatchers(HttpMethod.POST, "/travel_system/oss/picture/addPhoto/{id}").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
