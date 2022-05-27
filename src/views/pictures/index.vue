@@ -47,7 +47,6 @@ export default {
   },
 
   created() {
-    console.log(this.$route.query.mark_id)
     this.markeId = this.$route.query.mark_id
     this.findAllPictureByMarkId()
   },
@@ -55,7 +54,6 @@ export default {
   methods: {
     async findAllPictureByMarkId() {
       let res = await photos.findAllPictureByMarkId(this.markeId)
-      console.log(res)
       this.srcList = res.data.items
     },
 
@@ -69,7 +67,6 @@ export default {
     handleUploadSuccess(res, file, fileList) {
       if (res.code == 20000) {
         this.$message.success("上传成功")
-        console.log("上传成功:",res.data.url)
         this.findAllPictureByMarkId()
       } else {
         this.$message.error("上传失败")
