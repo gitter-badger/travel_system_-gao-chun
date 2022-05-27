@@ -2,17 +2,11 @@ package com.carolin_violet.travel_system.filter;
 
 import com.carolin_violet.travel_system.bean.security.InputUserCache;
 import com.carolin_violet.travel_system.bean.security.LoginUser;
-import com.carolin_violet.travel_system.config.RedisConfig;
 import com.carolin_violet.travel_system.config.RedisUtil;
-import com.carolin_violet.travel_system.handler.MyException;
 import com.carolin_violet.travel_system.utils.R;
 import com.carolin_violet.travel_system.utils.ResponseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;

@@ -54,7 +54,7 @@ public class HotelController {
         }
     }
 
-    // 修改旅馆信息 TODO 如果修改了图片就要删除oss的图片并更换新的
+    // 修改旅馆信息
     @PreAuthorize("hasAnyAuthority('ROLE_HOTEL')")
     @PutMapping("updateHotel")
     public R updateHotel(@RequestBody Hotel hotel) {

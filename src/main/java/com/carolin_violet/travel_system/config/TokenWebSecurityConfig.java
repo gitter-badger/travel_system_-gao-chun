@@ -4,25 +4,20 @@ import com.carolin_violet.travel_system.filter.CodeValidateFilter;
 import com.carolin_violet.travel_system.filter.JwtLoginFilter;
 import com.carolin_violet.travel_system.filter.TokenAuthenticationFilter;
 import com.carolin_violet.travel_system.security.DefaultPasswordEncoder;
-import com.carolin_violet.travel_system.security.TokenLogoutHandler;
 import com.carolin_violet.travel_system.security.TokenManager;
-import com.carolin_violet.travel_system.security.UnauthorizedEntryPoint;
 import com.carolin_violet.travel_system.security.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -138,7 +133,6 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
-//                "/travel_system/oss/picture", // 忽略图片上传接口
                 "/travel_system/msm/send/**",   // 忽略短信上传接口
                 "/travel_system/feedback/addFeedback",   // 忽略反馈上传接口
                 "/travel_system/travel-note/addNote",    // 忽略游记上传接口

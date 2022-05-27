@@ -30,9 +30,6 @@ public class MyLogoutHandler implements LogoutHandler {
 
     @Autowired
     private RedisTemplate redisTemplate;
-//    public MyLogoutHandler(TokenJwtManager tokenJwtManager) {
-//        this.tokenJwtManager = tokenJwtManager;
-//    }
 
     @Override
     public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) {

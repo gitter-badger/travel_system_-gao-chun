@@ -48,7 +48,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             LoginUser loginUser = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
-            System.out.println("-------------------------------------------------------------");
+            System.out.println("999999999999999999999999999999999999999999999");
             System.out.println(loginUser.getUsername());
             System.out.println(loginUser.getPassword());
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword(), new ArrayList<>()));
