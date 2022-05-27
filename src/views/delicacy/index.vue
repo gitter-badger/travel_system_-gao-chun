@@ -108,7 +108,7 @@
         <el-form-item label="美食图片" :label-width="formLabelWidth">
           <!--          -->
           <el-upload
-            action="http://localhost:8091/travel_system/oss/picture"
+            :action="BASE_API + '/travel_system/oss/picture'"
             list-type="picture-card"
             :limit="1*1"
             :before-upload="handleBeforeUpload"
@@ -174,7 +174,8 @@ export default {
       disabled: false,
       total: null,
       current: 1,
-      limit: 5
+      limit: 5,
+      BASE_API: process.env.VUE_APP_BASE_API
     }
   },
 

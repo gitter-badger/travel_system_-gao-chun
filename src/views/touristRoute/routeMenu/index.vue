@@ -71,7 +71,7 @@
           <el-button
             size="small"
             type="success"
-            @click="handleMoreSites(scope.$index, scope.row)"><i class="el-icon-edit"></i>查看站点</el-button>
+            @click="handleMoreSites(scope.$index, scope.row)">查看站点</el-button>
         </template>
       </el-table-column>
     </el-table>

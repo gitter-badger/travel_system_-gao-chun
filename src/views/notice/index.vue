@@ -98,7 +98,7 @@
         <el-form-item label="公告图片" :label-width="formLabelWidth">
           <!--          -->
           <el-upload
-            action="http://localhost:8091/travel_system/oss/picture"
+            :action="BASE_API + '/travel_system/oss/picture'"
             list-type="picture-card"
             :limit="1*1"
             :before-upload="handleBeforeUpload"
@@ -161,7 +161,8 @@ export default {
       disabled: false,
       current: 1,
       limit: 5,
-      total: null
+      total: null,
+      BASE_API: process.env.VUE_APP_BASE_API
     }
   },
 

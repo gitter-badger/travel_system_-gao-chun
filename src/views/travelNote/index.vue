@@ -52,8 +52,8 @@
         <template slot-scope="scope">
           <el-button
             size="small"
-            type="info"
-            @click="handleMorePictures(scope.$index, scope.row)"><i class="el-icon-edit"></i>查看更多图片</el-button>
+            type="success"
+            @click="handleMorePictures(scope.$index, scope.row)">查看更多图片</el-button>
           <el-button
             size="small"
             type="danger"
