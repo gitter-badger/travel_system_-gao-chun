@@ -16,9 +16,9 @@
       </el-dialog>
 
 
-    <div class="photo-container" v-for="src in srcList">
-      <div class="item">
-        <el-image :src="src" class="img" :preview-src-list="[src]">
+    <div class="photo-container">
+      <div class="item"  v-for="src in srcList">
+        <el-image :src="src" :preview-src-list="[src]">
           <div slot="placeholder" class="image-slot">
             <img src="/avatar.gif" alt="">
           </div>
@@ -38,7 +38,6 @@ export default {
   data() {
     return {
       markeId: null,
-      src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
       srcList: [],
       dialogImageUrl: '',
       dialogVisible: false,
@@ -80,16 +79,31 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "iconfont.css";
+
 .photo-container{
-  display: flex;
-  flex-flow: column wrap;
-  height: 100vh;
+  margin-top: 50px;
+  width: 100%;
+  height: 100%;
+  column-count: 5;
+  column-gap: 20px;
   .item{
-    margin: 10px;
-    width: calc(100%/3 - 120px);
-    .img{
+    .el-image{
       width: 100%;
-      height: 100%;
+      height: auto;
+      position: relative;
+      &:hover {
+        &:before{
+          position: absolute;
+          font-family: "iconfont";
+          content: "\e67e";
+          right: 0;
+          top: 0;
+          font-size: 25px;
+          color: red;
+          cursor: pointer;
+        }
+      }
     }
   }
 }
