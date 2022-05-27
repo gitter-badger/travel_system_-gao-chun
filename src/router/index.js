@@ -61,13 +61,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/manager/managerMenu',
     name: 'Manager',
-    meta: { title: '人员管理', icon: 'el-icon-s-help' },
+    meta: { title: '人员管理', icon: 'users' },
     children: [
       {
         path: 'managerMenu',
         name: 'ManagerMenu',
         component: () => import('@/views/manager/managerMenu/index'),
-        meta: { title: '人员菜单', icon: 'table' }
+        meta: { title: '人员菜单', icon: 'users' }
       },
       {
         path: 'permission',
@@ -88,7 +88,7 @@ export const constantRoutes = [
         path: 'hotelMenu',
         name: 'HotelMenu',
         component: () => import('@/views/hotel/index'),
-        meta: { title: '旅馆菜单', icon: 'table' }
+        meta: { title: '旅馆菜单', icon: 'hotel' }
       }
     ]
   },
@@ -102,7 +102,7 @@ export const constantRoutes = [
         path: 'scenicSpotMenu',
         name: 'scenicSpotMenu',
         component: () => import('@/views/scenicSpot/index'),
-        meta: { title: '景点菜单', icon: 'table' }
+        meta: { title: '景点菜单', icon: 'scenic' }
       }
     ]
   },
@@ -117,7 +117,7 @@ export const constantRoutes = [
         path: 'delicacyMenu',
         name: 'DelicacyMenu',
         component: () => import('@/views/delicacy/index'),
-        meta: { title: '美食菜单', icon: 'table' }
+        meta: { title: '美食菜单', icon: 'food' }
       }
     ]
   },
@@ -131,7 +131,7 @@ export const constantRoutes = [
         path: 'noticeMenu',
         name: 'NoticeMenu',
         component: () => import('@/views/notice/index'),
-        meta: { title: '公告菜单', icon: 'table' }
+        meta: { title: '公告菜单', icon: 'nested' }
       }
     ]
   },
@@ -142,19 +142,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/toursiteRoute/routeMenu',
     name: 'TouristRoute',
-    meta: { title: '旅游线路管理', icon: 'el-icon-s-help' },
+    meta: { title: '旅游线路管理', icon: 'route' },
     children: [
       {
         path: 'routeMenu',
         name: 'RouteMenu',
         component: () => import('@/views/touristRoute/routeMenu/index'),
-        meta: { title: '线路菜单', icon: 'table' }
+        meta: { title: '线路菜单', icon: 'route' }
       },
       {
         path: 'routeSites',
         name: 'RouteSites',
         component: () => import('@/views/touristRoute/routeSites/index'),
-        meta: { title: '线路站点', icon: 'table' },
+        meta: { title: '线路站点', icon: 'route' },
         hidden: true
       },
     ]
@@ -169,7 +169,7 @@ export const constantRoutes = [
         path: 'noteMenu',
         name: 'NoteMenu',
         component: () => import('@/views/travelNote/index'),
-        meta: { title: '游记菜单', icon: 'table' }
+        meta: { title: '游记菜单', icon: 'note' }
       }
     ]
   },
@@ -183,7 +183,7 @@ export const constantRoutes = [
         path: 'feedbackMenu',
         name: 'FeedbackMenu',
         component: () => import('@/views/feedback/index'),
-        meta: { title: '反馈菜单', icon: 'table' }
+        meta: { title: '反馈菜单', icon: 'feedback' }
       }
     ]
   },
