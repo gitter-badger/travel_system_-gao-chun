@@ -18,12 +18,13 @@
 
     <div class="photo-container">
       <div class="item"  v-for="src in srcList">
-        <el-image :src="src" :preview-src-list="[src]">
+        <el-image :src="src" :preview-src-list="srcList" lazy="lazy">
           <div slot="placeholder" class="image-slot">
-            <img src="/avatar.gif" alt="">
+            <img src="/loading.gif" alt="">
           </div>
         </el-image>
       </div>
+
     </div>
 
 
@@ -79,7 +80,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "iconfont.css";
 
 .photo-container{
   margin-top: 50px;
@@ -88,22 +88,10 @@ export default {
   column-count: 5;
   column-gap: 20px;
   .item{
+    margin-bottom: 10px;
     .el-image{
       width: 100%;
       height: auto;
-      position: relative;
-      &:hover {
-        &:before{
-          position: absolute;
-          font-family: "iconfont";
-          content: "\e67e";
-          right: 0;
-          top: 0;
-          font-size: 25px;
-          color: red;
-          cursor: pointer;
-        }
-      }
     }
   }
 }
