@@ -1,5 +1,7 @@
 # 高淳旅游服务管理系统(前台还在开发中)
 
+[![Join the chat at https://gitter.im/carolin-violet/travel_gaochun](https://badges.gitter.im/carolin-violet/travel_gaochun.svg)](https://gitter.im/carolin-violet/travel_gaochun?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 > 该系统为采用springboot+vue的前后端分离模式开发
 
